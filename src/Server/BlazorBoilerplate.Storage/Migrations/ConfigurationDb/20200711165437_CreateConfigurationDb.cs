@@ -1,4 +1,5 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
@@ -7,8 +8,11 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema("cfg");
+
             migrationBuilder.CreateTable(
                 name: "ApiResources",
+                schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -30,6 +34,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ApiScopes",
                 columns: table => new
                 {
@@ -49,7 +54,8 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                 });
 
             migrationBuilder.CreateTable(
-                name: "Clients",
+              name: "Clients",
+              schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -98,13 +104,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     DeviceCodeLifetime = table.Column<int>(nullable: false),
                     NonEditable = table.Column<bool>(nullable: false)
                 },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clients", x => x.Id);
-                });
+              constraints: table =>
+              {
+                  table.PrimaryKey("PK_Clients", x => x.Id);
+              });
 
             migrationBuilder.CreateTable(
                 name: "IdentityResources",
+                schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -127,6 +134,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
             migrationBuilder.CreateTable(
                 name: "ApiResourceClaims",
+                schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -140,12 +148,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ApiResourceClaims_ApiResources_ApiResourceId",
                         column: x => x.ApiResourceId,
+                        principalSchema: "cfg",
                         principalTable: "ApiResources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ApiResourceProperties",
                 columns: table => new
                 {
@@ -161,12 +171,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ApiResourceProperties_ApiResources_ApiResourceId",
                         column: x => x.ApiResourceId,
+                        principalSchema: "cfg",
                         principalTable: "ApiResources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ApiResourceScopes",
                 columns: table => new
                 {
@@ -181,12 +193,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ApiResourceScopes_ApiResources_ApiResourceId",
                         column: x => x.ApiResourceId,
+                        principalSchema: "cfg",
                         principalTable: "ApiResources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ApiResourceSecrets",
                 columns: table => new
                 {
@@ -205,12 +219,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ApiResourceSecrets_ApiResources_ApiResourceId",
                         column: x => x.ApiResourceId,
+                        principalSchema: "cfg",
                         principalTable: "ApiResources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ApiScopeClaims",
                 columns: table => new
                 {
@@ -225,12 +241,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ApiScopeClaims_ApiScopes_ScopeId",
                         column: x => x.ScopeId,
+                        principalSchema: "cfg",
                         principalTable: "ApiScopes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ApiScopeProperties",
                 columns: table => new
                 {
@@ -246,12 +264,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ApiScopeProperties_ApiScopes_ScopeId",
                         column: x => x.ScopeId,
+                        principalSchema: "cfg",
                         principalTable: "ApiScopes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ClientClaims",
                 columns: table => new
                 {
@@ -267,12 +287,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ClientClaims_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalSchema: "cfg",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ClientCorsOrigins",
                 columns: table => new
                 {
@@ -287,12 +309,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ClientCorsOrigins_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalSchema: "cfg",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ClientGrantTypes",
                 columns: table => new
                 {
@@ -307,12 +331,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ClientGrantTypes_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalSchema: "cfg",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ClientIdPRestrictions",
                 columns: table => new
                 {
@@ -327,6 +353,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ClientIdPRestrictions_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalSchema: "cfg",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -334,6 +361,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
             migrationBuilder.CreateTable(
                 name: "ClientPostLogoutRedirectUris",
+                schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -347,12 +375,14 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ClientPostLogoutRedirectUris_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalSchema: "cfg",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
+                schema: "cfg",
                 name: "ClientProperties",
                 columns: table => new
                 {
@@ -368,6 +398,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ClientProperties_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalSchema: "cfg",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -375,6 +406,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
             migrationBuilder.CreateTable(
                 name: "ClientRedirectUris",
+                schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -388,13 +420,16 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ClientRedirectUris_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalSchema: "cfg",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
+
             migrationBuilder.CreateTable(
                 name: "ClientScopes",
+                schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -408,6 +443,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ClientScopes_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalSchema: "cfg",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -415,6 +451,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
             migrationBuilder.CreateTable(
                 name: "ClientSecrets",
+                schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -432,6 +469,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_ClientSecrets_Clients_ClientId",
                         column: x => x.ClientId,
+                        principalSchema: "cfg",
                         principalTable: "Clients",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -439,6 +477,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
             migrationBuilder.CreateTable(
                 name: "IdentityResourceClaims",
+                schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -452,6 +491,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_IdentityResourceClaims_IdentityResources_IdentityResourceId",
                         column: x => x.IdentityResourceId,
+                        principalSchema: "cfg",
                         principalTable: "IdentityResources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -459,6 +499,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
             migrationBuilder.CreateTable(
                 name: "IdentityResourceProperties",
+                schema: "cfg",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -473,115 +514,137 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     table.ForeignKey(
                         name: "FK_IdentityResourceProperties_IdentityResources_IdentityResourceId",
                         column: x => x.IdentityResourceId,
+                        principalSchema: "cfg",
                         principalTable: "IdentityResources",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ApiResourceClaims_ApiResourceId",
                 table: "ApiResourceClaims",
                 column: "ApiResourceId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ApiResourceProperties_ApiResourceId",
                 table: "ApiResourceProperties",
                 column: "ApiResourceId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ApiResources_Name",
                 table: "ApiResources",
                 column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ApiResourceScopes_ApiResourceId",
                 table: "ApiResourceScopes",
                 column: "ApiResourceId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ApiResourceSecrets_ApiResourceId",
                 table: "ApiResourceSecrets",
                 column: "ApiResourceId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ApiScopeClaims_ScopeId",
                 table: "ApiScopeClaims",
                 column: "ScopeId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ApiScopeProperties_ScopeId",
                 table: "ApiScopeProperties",
                 column: "ScopeId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ApiScopes_Name",
                 table: "ApiScopes",
                 column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ClientClaims_ClientId",
                 table: "ClientClaims",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ClientCorsOrigins_ClientId",
                 table: "ClientCorsOrigins",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ClientGrantTypes_ClientId",
                 table: "ClientGrantTypes",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ClientIdPRestrictions_ClientId",
                 table: "ClientIdPRestrictions",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ClientPostLogoutRedirectUris_ClientId",
                 table: "ClientPostLogoutRedirectUris",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ClientProperties_ClientId",
                 table: "ClientProperties",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ClientRedirectUris_ClientId",
                 table: "ClientRedirectUris",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_Clients_ClientId",
                 table: "Clients",
                 column: "ClientId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ClientScopes_ClientId",
                 table: "ClientScopes",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_ClientSecrets_ClientId",
                 table: "ClientSecrets",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_IdentityResourceClaims_IdentityResourceId",
                 table: "IdentityResourceClaims",
                 column: "IdentityResourceId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_IdentityResourceProperties_IdentityResourceId",
                 table: "IdentityResourceProperties",
                 column: "IdentityResourceId");
 
             migrationBuilder.CreateIndex(
+                schema: "cfg",
                 name: "IX_IdentityResources_Name",
                 table: "IdentityResources",
                 column: "Name",

@@ -11,10 +11,11 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
     [DbContext(typeof(ConfigurationDbContext))]
     partial class ConfigurationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+      protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("cfg")
                 .HasAnnotation("ProductVersion", "3.1.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -66,7 +67,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("ApiResources");
+                    b.ToTable("ApiResources", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceClaim", b =>
@@ -88,7 +89,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiResourceClaims");
+                    b.ToTable("ApiResourceClaims", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceProperty", b =>
@@ -115,7 +116,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiResourceProperties");
+                    b.ToTable("ApiResourceProperties", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceScope", b =>
@@ -137,106 +138,70 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ApiResourceId");
 
-                    b.ToTable("ApiResourceScopes");
+                    b.ToTable("ApiResourceScopes", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceSecret", b =>
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("int")
+                    .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                b.Property<int>("ApiResourceId")
+                    .HasColumnType("int");
+
+                b.Property<DateTime>("Created")
+                    .HasColumnType("datetime2");
+
+                b.Property<string>("Description")
+                    .HasColumnType("nvarchar(1000)")
+                    .HasMaxLength(1000);
+
+                b.Property<DateTime?>("Expiration")
+                    .HasColumnType("datetime2");
+
+                b.Property<string>("Type")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(250)")
+                    .HasMaxLength(250);
+
+                b.Property<string>("Value")
+                    .IsRequired()
+                    .HasColumnType("nvarchar(4000)")
+                    .HasMaxLength(4000);
+
+                b.HasKey("Id");
+
+                b.HasIndex("ApiResourceId");
+
+                b.ToTable("ApiResourceSecrets", "cfg");
+            });
+
+            //  modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceSecret", b =>
+                modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScope", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ApiResourceId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<DateTime?>("Expiration")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(250)")
-                        .HasMaxLength(250);
-
-                    b.Property<string>("Value")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(4000)")
-                        .HasMaxLength(4000);
-
+                    b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int").HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<bool>("Enabled").HasColumnType("bit");
+                    b.Property<string>("Name").IsRequired().HasColumnType("nvarchar(200)").HasMaxLength(200);
+                    b.Property<string>("DisplayName").HasColumnType("nvarchar(200)").HasMaxLength(200);
+                    b.Property<string>("Description").HasColumnType("nvarchar(1000)").HasMaxLength(1000);
+                    b.Property<bool>("Required").HasColumnType("bit");
+                    b.Property<bool>("Emphasize").HasColumnType("bit");
+                    b.Property<bool>("ShowInDiscoveryDocument").HasColumnType("bit");
                     b.HasKey("Id");
-
-                    b.HasIndex("ApiResourceId");
-
-                    b.ToTable("ApiResourceSecrets");
-                });
-
-            modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScope", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<bool>("Emphasize")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<bool>("Required")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("ShowInDiscoveryDocument")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("ApiScopes");
+                    b.HasIndex("Name").IsUnique();
+                    b.ToTable("ApiScopes", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScopeClaim", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ScopeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
+                    b.Property<int>("Id").ValueGeneratedOnAdd().HasColumnType("int").HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("ScopeId").HasColumnType("int");
+                    b.Property<string>("Type").IsRequired().HasColumnType("nvarchar(200)").HasMaxLength(200);
                     b.HasKey("Id");
-
                     b.HasIndex("ScopeId");
-
-                    b.ToTable("ApiScopeClaims");
+                    b.ToTable("ApiScopeClaims", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiScopeProperty", b =>
@@ -263,7 +228,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ScopeId");
 
-                    b.ToTable("ApiScopeProperties");
+                    b.ToTable("ApiScopeProperties", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.Client", b =>
@@ -421,7 +386,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     b.HasIndex("ClientId")
                         .IsUnique();
 
-                    b.ToTable("Clients");
+                    b.ToTable("Clients", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ClientClaim", b =>
@@ -448,7 +413,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientClaims");
+                    b.ToTable("ClientClaims", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ClientCorsOrigin", b =>
@@ -470,7 +435,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientCorsOrigins");
+                    b.ToTable("ClientCorsOrigins", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ClientGrantType", b =>
@@ -492,7 +457,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientGrantTypes");
+                    b.ToTable("ClientGrantTypes", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ClientIdPRestriction", b =>
@@ -514,7 +479,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientIdPRestrictions");
+                    b.ToTable("ClientIdPRestrictions", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ClientPostLogoutRedirectUri", b =>
@@ -536,7 +501,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientPostLogoutRedirectUris");
+                    b.ToTable("ClientPostLogoutRedirectUris", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ClientProperty", b =>
@@ -563,7 +528,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientProperties");
+                    b.ToTable("ClientProperties", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ClientRedirectUri", b =>
@@ -585,7 +550,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientRedirectUris");
+                    b.ToTable("ClientRedirectUris", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ClientScope", b =>
@@ -607,7 +572,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientScopes");
+                    b.ToTable("ClientScopes", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ClientSecret", b =>
@@ -644,7 +609,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("ClientSecrets");
+                    b.ToTable("ClientSecrets", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.IdentityResource", b =>
@@ -693,7 +658,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("IdentityResources");
+                    b.ToTable("IdentityResources", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.IdentityResourceClaim", b =>
@@ -715,7 +680,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("IdentityResourceId");
 
-                    b.ToTable("IdentityResourceClaims");
+                    b.ToTable("IdentityResourceClaims", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.IdentityResourceProperty", b =>
@@ -742,7 +707,7 @@ namespace BlazorBoilerplate.Storage.Migrations.ConfigurationDb
 
                     b.HasIndex("IdentityResourceId");
 
-                    b.ToTable("IdentityResourceProperties");
+                    b.ToTable("IdentityResourceProperties", "cfg");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.ApiResourceClaim", b =>

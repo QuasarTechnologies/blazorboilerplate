@@ -708,12 +708,13 @@ namespace BlazorBoilerplate.Server
                 app.UseOpenApi();
                 app.UseSwaggerUi3(settings =>
                 {
-                    settings.OAuth2Client = new OAuth2ClientSettings()
-                    {
-                        AppName = projectName,
-                        ClientId = IdentityServerConfig.SwaggerClientID,
-                        UsePkceWithAuthorizationCodeGrant = true
-                    };
+                    settings.EnableTryItOut = true;
+                    //settings.OAuth2Client = new OAuth2ClientSettings()
+                    //{
+                    //    AppName = projectName,
+                    //    ClientId = IdentityServerConfig.SwaggerClientID,
+                    //    UsePkceWithAuthorizationCodeGrant = false
+                    //};
                 });
             }
 

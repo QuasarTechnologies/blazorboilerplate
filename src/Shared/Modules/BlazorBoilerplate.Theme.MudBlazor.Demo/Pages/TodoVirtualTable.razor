@@ -17,20 +17,20 @@
     <br /><b>Delete is Protected to Admin users only</b>.
 </p>
 
-<DateTimeFilter Busy="busy" Filter="filter" />
+<DateTimeFilter Busy="_busy" Filter="filter" />
 
 <MudGrid>
     <MudItem xs="6" sm="3">
-        <MudSelect Disabled="@busy" @bind-Value="@filter.CreatedById" FullWidth="true" Label="Creators">
-            @foreach (var user in Creators)
+        <MudSelect Disabled="@_busy" @bind-Value="@filter.CreatedById" FullWidth="true" Label="Creators">
+            @foreach (var user in _creators)
             {
                 <MudSelectItem Value="@user.Id">@user.DisplayValue</MudSelectItem>
             }
         </MudSelect>
     </MudItem>
     <MudItem xs="6" sm="3">
-        <MudSelect Disabled="@busy" @bind-Value="@filter.ModifiedById" FullWidth="true" Label="Editors">
-            @foreach (var user in Editors)
+        <MudSelect Disabled="@_busy" @bind-Value="@filter.ModifiedById" FullWidth="true" Label="Editors">
+            @foreach (var user in _editors)
             {
                 <MudSelectItem Value="@user.Id">@user.DisplayValue</MudSelectItem>
             }
@@ -47,7 +47,7 @@
 @{
 #if DEBUG
     {
-        <div style="margin: 20px; font-weight: bold; font-size: 18px">Total item Count: @itemCount - Start index: @startIndex - Page size: @pageSize</div>
+        <div style="margin: 20px; font-weight: bold; font-size: 18px">Total item Count: _itemCount - Start index: _startIndex - Page size: _pageSize</div>
     }
 #else
 {
@@ -67,7 +67,7 @@
     <MudItem xs="2">Modified by</MudItem>
 </MudGrid>
 <div style="height:360px;overflow-y:auto;overflow-x:hidden;width:calc(100% + 24px);">
-    <Virtualize @ref="asyncVirtualize" Context="item" ItemsProvider="LoadToDos" ItemSize="72" OverscanCount="20">
+    <Virtualize @ref="_asyncVirtualize" Context="item" ItemsProvider="LoadToDos" ItemSize="72" OverscanCount="20">
         <ItemContent>
             <MudGrid Class="align-center" @key="item.Id" Style="border-bottom: 1px solid #eee;">
                 <MudItem xs="2"><MudIconButton Icon="@Icons.Filled.Delete" OnClick="@(() => OpenDeleteDialog(item))"></MudIconButton></MudItem>
@@ -86,41 +86,44 @@
     </Virtualize>
 </div>
 
-@if (currentTodo != null)
-{<MudDialog @bind-IsVisible="@dialogIsOpen">
+@if (_currentTodo != null)
+{<MudDialog @bind-IsVisible="@_dialogIsOpen">
      <TitleContent>
          <MudText Typo="Typo.h6">
              <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
-             Create Todo
+             Create Ain't Got Shit Todo
          </MudText>
      </TitleContent>
         <DialogContent>
-            <EditForm id="newTodoForm" Model="@currentTodo" OnValidSubmit="@NewEntity">
+            <EditForm id="newTodoForm" Model="@_currentTodo" OnValidSubmit="@NewEntity">
                 <FluentValidationValidator />
                 <MudValidationSummary />
-                <MudTextField @bind-Value="@currentTodo.Title" Label="Title" AdornmentIcon="@Icons.Filled.Title" Adornment="Adornment.End" FullWidth="true" Required="true" RequiredError=@L["Required"]></MudTextField>
+                <MudTextField
+                    @bind-Value="@_currentTodo.Title"
+                    Label="The Big Ole Title"
+                    AdornmentIcon="@Icons.Filled.Title"
+                    Adornment="Adornment.End"
+                    FullWidth="true"
+                    Required="true"
+                    RequiredError=@L["Required"]>
+                </MudTextField>
 
-                <MudCheckBox @bind-Checked="@currentTodo.IsCompleted" Label="Completed"></MudCheckBox>
+                <MudCheckBox @bind-Checked="@_currentTodo.IsCompleted" Label="Completed"></MudCheckBox>
             </EditForm>
         </DialogContent>
         <DialogActions>
-            <MudButton OnClick="@(e => { dialogIsOpen = false; })">@L["Cancel"]</MudButton>
+            <MudButton OnClick="@(e => { _dialogIsOpen = false; })">@L["Cancel"]</MudButton>
             <MudButton ButtonType="ButtonType.Submit" form="newTodoForm" Variant="Variant.Filled" Color="Color.Primary">Create Todo</MudButton>
         </DialogActions>
     </MudDialog>
 
-    <MudDialog @bind-IsVisible="@deleteDialogOpen" Style="z-index:100">
+    <MudDialog @bind-IsVisible="@_deleteDialogOpen" Style="z-index:100">
         <TitleContent>
-            <MudText Typo="Typo.h6">
-                <MudIcon Icon="@Icons.Material.Filled.DeleteForever" Class="mr-3 mb-n1" />
-                @L["Confirm Delete"]
-            </MudText>
+            <MudText Typo="Typo.h6"> <MudIcon Icon="@Icons.Material.Filled.DeleteForever" Class="mr-3 mb-n1" /> @L["Confirm Delete"] </MudText>
         </TitleContent>
-        <DialogContent>
-            @L["Are you sure you want to delete {0}?", currentTodo.Title]
-        </DialogContent>
+        <DialogContent> @L["Are you sure you want to delete {0}?", _currentTodo.Title] </DialogContent>
         <DialogActions>
-            <MudButton OnClick="@(e => { deleteDialogOpen = false; })">@L["Cancel"]</MudButton>
+            <MudButton OnClick="@(e => { _deleteDialogOpen = false; })">@L["Cancel"]</MudButton>
             <MudButton OnClick="@Delete" Variant="Variant.Filled" Color="Color.Error">@L["Delete"]</MudButton>
         </DialogActions>
     </MudDialog>
@@ -128,24 +131,24 @@
 
 @code {
     private ToDoFilter filter = new();
-    private Virtualize<Todo> asyncVirtualize;
+    private Virtualize<Todo> _asyncVirtualize;
 
-    private List<SelectItem<Guid?>> Creators = new();
-    private List<SelectItem<Guid?>> Editors = new();
+    private List<SelectItem<Guid?>> _creators = new();
+    private List<SelectItem<Guid?>> _editors = new();
 
-    private bool busy;
-    private bool deleteDialogOpen = false;
-    private bool dialogIsOpen = false;
+    private bool _busy;
+    private bool _deleteDialogOpen = false;
+    private bool _dialogIsOpen = false;
 
-    private int itemCount;
+    private int _itemCount;
 
 
 #if DEBUG
-    private int startIndex;
-    private int pageSize;
+    private int _startIndex;
+    private int _pageSize;
 #endif
 
-    private Todo currentTodo = new();
+    private Todo _currentTodo = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -156,14 +159,14 @@
 
     private async void FilterPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
-        busy = true;
+        _busy = true;
 
         await LoadFilters(e.PropertyName);
 
         apiClient.ClearEntitiesCache();
-        await asyncVirtualize.RefreshDataAsync();
+        await _asyncVirtualize.RefreshDataAsync();
 
-        busy = false;
+        _busy = false;
 
         StateHasChanged();
     }
@@ -188,9 +191,9 @@
 
                 if (!t.IsFaulted)
                 {
-                    Creators = t.Result.Select(i => new SelectItem<Guid?> { Id = i.Id, DisplayValue = i.UserName }).ToList();
+                    _creators = t.Result.Select(i => new SelectItem<Guid?> { Id = i.Id, DisplayValue = i.UserName }).ToList();
 
-                    Creators.Insert(0, new SelectItem<Guid?> { Id = null, DisplayValue = "-" });
+                    _creators.Insert(0, new SelectItem<Guid?> { Id = null, DisplayValue = "-" });
                 }
                 else
                     viewNotifier.Show(t.Exception.GetBaseException().Message, ViewNotifierType.Error, L["Operation Failed"]);
@@ -201,9 +204,9 @@
 
                 if (!t.IsFaulted)
                 {
-                    Editors = t.Result.Select(i => new SelectItem<Guid?> { Id = i.Id, DisplayValue = i.UserName }).ToList();
+                    _editors = t.Result.Select(i => new SelectItem<Guid?> { Id = i.Id, DisplayValue = i.UserName }).ToList();
 
-                    Editors.Insert(0, new SelectItem<Guid?> { Id = null, DisplayValue = "-" });
+                    _editors.Insert(0, new SelectItem<Guid?> { Id = null, DisplayValue = "-" });
                 }
                 else
                     viewNotifier.Show(t.Exception.GetBaseException().Message, ViewNotifierType.Error, L["Operation Failed"]);
@@ -214,15 +217,15 @@
     private async ValueTask<ItemsProviderResult<Todo>> LoadToDos(ItemsProviderRequest request)
     {
 #if DEBUG
-        startIndex = request.StartIndex;
-        pageSize = request.Count;
+        _startIndex = request.StartIndex;
+        _pageSize = request.Count;
 #endif
 
         var items = await apiClient.GetToDos(filter,
         request.Count,
         request.StartIndex);
 
-        itemCount = (int)items.InlineCount;
+        _itemCount = (int)items.InlineCount;
 
         if (request.StartIndex == 0)
             StateHasChanged();
@@ -231,7 +234,7 @@
         StateHasChanged();
 #endif
 
-        return new ItemsProviderResult<Todo>(items, itemCount);
+        return new ItemsProviderResult<Todo>(items, _itemCount);
     }
 
     public async void Update(Todo todo)
@@ -254,13 +257,13 @@
     {
         try
         {
-            apiClient.RemoveEntity(currentTodo);
+            apiClient.RemoveEntity(_currentTodo);
             await apiClient.SaveChanges();
 
             apiClient.ClearEntitiesCache();
-            await asyncVirtualize.RefreshDataAsync();
+            await _asyncVirtualize.RefreshDataAsync();
 
-            viewNotifier.Show($"{currentTodo.Title} deleted", ViewNotifierType.Success, L["Operation Successful"]);
+            viewNotifier.Show($"{_currentTodo.Title} deleted", ViewNotifierType.Success, L["Operation Successful"]);
         }
         catch (Exception ex)
         {
@@ -268,35 +271,35 @@
             viewNotifier.Show(ex.GetBaseException().Message, ViewNotifierType.Error, L["Operation Failed"]);
         }
 
-        currentTodo = new Todo();
+        _currentTodo = new Todo();
 
-        deleteDialogOpen = false;
+        _deleteDialogOpen = false;
     }
 
     public void OpenDialog()
     {
-        currentTodo = new Todo();
-        dialogIsOpen = true;
+        _currentTodo = new Todo();
+        _dialogIsOpen = true;
     }
 
     public void OpenDeleteDialog(Todo todo)
     {
-        currentTodo = todo;
-        deleteDialogOpen = true;
+        _currentTodo = todo;
+        _deleteDialogOpen = true;
     }
 
     public async Task NewEntity()
     {
-        dialogIsOpen = false;
+        _dialogIsOpen = false;
 
         try
         {
-            apiClient.AddEntity(currentTodo);
+            apiClient.AddEntity(_currentTodo);
 
             await apiClient.SaveChanges();
 
             apiClient.ClearEntitiesCache();
-            await asyncVirtualize.RefreshDataAsync();
+            await _asyncVirtualize.RefreshDataAsync();
 
             StateHasChanged();
         }

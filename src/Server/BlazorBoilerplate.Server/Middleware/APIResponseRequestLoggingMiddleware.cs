@@ -39,7 +39,6 @@ namespace BlazorBoilerplate.Server.Middleware
         public async Task Invoke(HttpContext httpContext, IServiceScopeFactory scopeFactory, UserManager<ApplicationUser> userManager)
         {
             _scopeFactory = scopeFactory;
-
             try
             {
                 var request = httpContext.Request;
@@ -51,25 +50,19 @@ namespace BlazorBoilerplate.Server.Middleware
                 {
                     Stopwatch stopWatch = Stopwatch.StartNew();
                     var requestTime = DateTime.UtcNow;
-
                     var formattedRequest = await FormatRequest(request);
                     var originalBodyStream = httpContext.Response.Body;
-
                     using var responseBody = new MemoryStream();
                     try
                     {
                         string responseBodyContent = null;
-
                         var response = httpContext.Response;
-
                         if (new string[] { "/api/localization", "/api/data", "/api/externalauth" }.Any(e => request.Path.StartsWithSegments(new PathString(e.ToLower()))))
                             await _next.Invoke(httpContext);
                         else
                         {
                             response.Body = responseBody;
-
                             await _next.Invoke(httpContext);
-
                             //wrap response in ApiResponse
                             if (httpContext.Response.StatusCode == Status200OK)
                             {

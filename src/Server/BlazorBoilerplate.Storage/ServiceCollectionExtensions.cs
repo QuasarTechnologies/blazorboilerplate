@@ -70,19 +70,33 @@ namespace BlazorBoilerplate.Storage
                 builder.UseNpgsql(configuration.GetConnectionString("PostgresConnection"), options => options.MigrationsAssembly(migrationsAssembly));
         }
 
-        public static IIdentityServerBuilder AddIdentityServerStores(this IIdentityServerBuilder builder, IConfiguration configuration)
-        => builder.AddConfigurationStore(options =>
-            {
-                options.ConfigureDbContext = x => GetDbContextOptions<ApplicationDbContext>(x, configuration);
-            })
-            .AddOperationalStore(options =>
-            {
-                options.ConfigureDbContext = x => GetDbContextOptions<ApplicationDbContext>(x, configuration);
+        public static IIdentityServerBuilder AddIdentityServerStores(this IIdentityServerBuilder builder, IConfiguration configuration) => builder.AddConfigurationStore(options =>
+        {
+            options.ConfigureDbContext = x => GetDbContextOptions<ApplicationDbContext>(x, configuration);
+            options.DefaultSchema = "cfg";
+        }).AddOperationalStore(options =>
+        {
+            options.ConfigureDbContext = x => GetDbContextOptions<ApplicationDbContext>(x, configuration);
+            options.DefaultSchema = "cfg";
+            // this enables automatic token cleanup. this is optional.
+            options.EnableTokenCleanup = true;
 
-                // this enables automatic token cleanup. this is optional.
-                options.EnableTokenCleanup = true;
+            options.TokenCleanupInterval = 3600; //In Seconds 1 hour
+        });
 
-                options.TokenCleanupInterval = 3600; //In Seconds 1 hour
-            });
+       // public static IIdentityServerBuilder AddIdentityServerStores(this IIdentityServerBuilder builder, IConfiguration configuration) => builder.AddConfigurationStore(options =>
+       //     {
+       //         options.ConfigureDbContext = x => GetDbContextOptions<ApplicationDbContext>(x, configuration);
+       //         options.DefaultSchema("cfg");
+       //
+       //     }).AddOperationalStore(options =>
+       //     {
+       //         options.ConfigureDbContext = x => GetDbContextOptions<ApplicationDbContext>(x, configuration);
+       //
+       //         // this enables automatic token cleanup. this is optional.
+       //         options.EnableTokenCleanup = true;
+       //
+       //         options.TokenCleanupInterval = 3600; //In Seconds 1 hour
+       //     });
     }
 }

@@ -131,7 +131,7 @@ This project is licensed under the terms of the [MIT license](LICENSE).
 - In chrome over https: 1) An SSL certificate error occurred when fetching the script; 2) DOMException: Failed to register a ServiceWorker for scope ('https://x.x.x.x:port/') with script ('https://x.x.x.x:port/service-worker.js'); Login works. After login: There is no additional error.
 - In firefox over http: 1) navigator.serviceWorker is undefined. Login works. After login: WebSocket is not in the OPEN state
 - In firefox over https: 1) No errors. Login works. After login: WebSocket is not in the OPEN state. 
-- In ASPNETCORE_ENVIRONMENT=Production: http will redirect to https. If you are using a self signed/invalid ssl certificate the following will occur:
+- In  ASPNETCORE_ENVIRONMENT=Production: http will redirect to https. If you are using a self signed/invalid ssl certificate the following will occur:
 - In chrome or firefox over https: Same as above except login will fail. After login attempt: There was an unhandled exception on the current circuit, so this circuit will be terminated.
 - Note: In Production, if the httpClientHandler server certificate validation returns false (caused by a self signed/invalid ssl certificate) then the login will fail. In Development, overriding the certificate validation via ServerCertificateCustomValidationCallback = () => { return true; } prevents the ssl cert validation from failing which causes the login to succeed.
 

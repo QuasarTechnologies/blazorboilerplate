@@ -5,7 +5,7 @@ using System.Globalization;
 
 namespace BlazorBoilerplate.Server.Controllers
 {
-    [OpenApiIgnore]
+    //[OpenApiIgnore]
     [Route("[controller]/[action]")]
     public class CultureController : Controller
     {

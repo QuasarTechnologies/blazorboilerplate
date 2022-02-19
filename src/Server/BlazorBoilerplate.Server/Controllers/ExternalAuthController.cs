@@ -11,7 +11,7 @@ using System.Security.Principal;
 
 namespace BlazorBoilerplate.Server.Controllers
 {
-    [OpenApiIgnore]
+    //[OpenApiIgnore]
     [Route("api/[controller]")]
     [ApiController]
     public class ExternalAuthController : ControllerBase
