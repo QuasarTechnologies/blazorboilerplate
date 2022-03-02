@@ -7,7 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Shared\LandingLayout.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Shared\LandingLayout.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CG.Blazor.Forms._MudBlazor" Version="2022.1.1" />
     <PackageReference Include="MudBlazor" Version="6.0.6" />
+    <PackageReference Include="MudBlazor.ThemeManager" Version="1.0.6" />
     <PackageReference Include="Toolbelt.Blazor.LoadingBar" Version="13.1.2" />
   </ItemGroup>
 
@@ -17,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Theme\" />
     <Folder Include="wwwroot\fonts\" />
   </ItemGroup>
 

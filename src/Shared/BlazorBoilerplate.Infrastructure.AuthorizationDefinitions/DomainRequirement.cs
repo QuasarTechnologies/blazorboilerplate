@@ -15,7 +15,7 @@ namespace BlazorBoilerplate.Infrastructure.AuthorizationDefinitions
             RequiredDomain = requiredDomain;
         }
     }
-
+   
     public class DomainRequirementHandler : AuthorizationHandler<DomainRequirement>
     {
         protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, DomainRequirement requirement)

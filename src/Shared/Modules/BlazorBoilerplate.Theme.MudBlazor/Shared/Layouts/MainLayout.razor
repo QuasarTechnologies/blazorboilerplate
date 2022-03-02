@@ -1,4 +1,5 @@
 ﻿@inherits RootLayout
+@*@inherits MainLayoutBase*@
 @inject NavigationManager navigationManager
 @inject AppState appState
 @inject IStringLocalizer<Global> L
@@ -13,7 +14,7 @@
         <MudDrawer @bind-Open="@_navMenuOpened" Elevation="2">
             <MudDrawerHeader>
                 <div class="drawer-logo">
-                    <img alt="@appState.AppName" class="logo-img" src=@($"{Module.ContentPath}/images/logo-dark.svg") title="@appState.AppName">
+                    <img alt="@appState.AppName" class="logo-img" src=@($"{Module.ContentPath}/images/icon-512.png") title="@appState.AppName">
                     <a href="/">@appState.AppName</a>
                 </div>
             </MudDrawerHeader>

@@ -709,12 +709,12 @@ namespace BlazorBoilerplate.Server
                 app.UseSwaggerUi3(settings =>
                 {
                     settings.EnableTryItOut = true;
-                    //settings.OAuth2Client = new OAuth2ClientSettings()
-                    //{
-                    //    AppName = projectName,
-                    //    ClientId = IdentityServerConfig.SwaggerClientID,
-                    //    UsePkceWithAuthorizationCodeGrant = false
-                    //};
+                    settings.OAuth2Client = new OAuth2ClientSettings()
+                    {
+                        AppName = projectName,
+                        ClientId = IdentityServerConfig.SwaggerClientID,
+                        UsePkceWithAuthorizationCodeGrant = false
+                    };
                 });
             }
 

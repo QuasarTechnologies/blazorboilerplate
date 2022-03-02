@@ -1,0 +1,118 @@
+@page "/appointment"
+@inject ISnackbar Snackbar
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+<TopSection>
+    <Breadcrumbs>
+        <Breadcrumb Title="Appointment" />
+    </Breadcrumbs>
+</TopSection>
+<MudGrid Spacing="6" Class="mt-16">
+        <MudItem xs="7">
+            <MudText Typo="Typo.h5" GutterBottom="true">New Appointment</MudText>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                                  <MudTimePicker @bind-Date="@date" Label="Start Time" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                                </MudItem>
+                <!-- Row 1 -->
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="@ClientName" Label="Client Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField @bind-Value="@PetName" Label="Pet Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                </MudItem>
+                 <!-- Row 2 -->
+                 <MudItem xs="12" md="6">
+                     <MudDatePicker @bind-Date="@_startDate" Label="Start Date" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                 </MudItem>
+                 <MudItem xs="12" md="6">
+                    <MudTimePicker @bind-Date="@_startTime" Label="Start Time" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                </MudItem>
+                 <!-- Row 3 -->
+                 <MudItem xs="12" md="6">
+                     <MudDatePicker @bind-Date="@_endDate" Label="End Date" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                 </MudItem>
+                 <MudItem xs="12" md="6">
+                    <MudTimePicker @bind-Date="@_endTime" Label="End Time" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                </MudItem>
+                 <!-- Row 4 -->
+                 <MudItem xs="12" md="6">
+                     <MudSelect T="ServiceType" Label="Service Type" Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter" Margin="Margin.Dense" OnInternalInputChanged="() => { date = _startDate; }">
+                         <MudSelectItem Value="@(new ServiceType("Bath"))"/>
+                         <MudSelectItem Value="@(new ServiceType("Bath & Trim"))"/>
+                         <MudSelectItem Value="@(new ServiceType("Full Groom"))"/>
+                         <MudSelectItem Value="@(new ServiceType("Boarding"))"/>
+                     </MudSelect>
+                 </MudItem>
+                 
+                 <MudItem xs="12" md="6" Class="d-flex justify-center">
+                     <MudButton Variant="Variant.Filled" DisableElevation="true" Color="Color.Primary" Size="Size.Large" Class="mt-8">Continue to Payment</MudButton>
+                 </MudItem>
+                 <!-- Row 1 -->
+            </MudGrid>
+        </MudItem>
+        <MudItem xs="5">
+            <MudText Typo="Typo.h5" GutterBottom="true">Cart</MudText>
+            <MudPaper Class="d-flex flex-column" Style="height:100%;" Outlined="true">
+                <MudList Clickable="true">
+                    <MudListItem Icon="@Icons.Material.Filled.ContentCut">
+                        <div class="d-flex">
+                            <MudText>Scissor - Big</MudText>
+                            <MudText Inline="true" Class="ml-auto">$5</MudText>
+                        </div>
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.AirplaneTicket">
+                        <div class="d-flex">
+                            <MudText>Model Airplane</MudText>
+                            <MudText Class="ml-auto">$20</MudText>
+                        </div>
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.Create">
+                        <div class="d-flex">
+                            <MudText>Plastic Glue</MudText>
+                            <MudText Class="ml-auto">$12</MudText>
+                        </div>
+                    </MudListItem>
+                    <MudListItem Icon="@Icons.Material.Filled.ColorLens">
+                        <div class="d-flex">
+                            <MudText>Color set - Modern planes</MudText>
+                            <MudText Class="ml-auto">$16</MudText>T
+                        </div>
+                    </MudListItem>
+                </MudList>
+                <div class="mt-auto">
+                    <MudDivider />
+                    <div class="d-flex pa-4">
+                        <MudText>Total:</MudText>
+                        <MudText Class="ml-auto"><b>$53</b></MudText>
+                    </div>
+                </div>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+
+@code{
+    DateTime? date = DateTime.Today;
+    private string ClientName { get; set; } = "Frank Smith";
+    private string PetName { get; set; } = "Cosmo";
+    const string StartDate  = "03/15/2022";
+    const string StartTime  = "04:00PM";
+    const string EndDate = "03/15/2022";
+    const string EndTime  = "06:00PM";
+    DateTime? _startDate  = DateTime.Now.Add(TimeSpan.FromDays(5));
+    DateTime? _startTime  = DateTime.Now.ToUniversalTime();
+    DateTime? _endDate  = DateTime.Now;
+    DateTime? _endTime  = DateTime.Now.ToUniversalTime();
+    //private string ServiceType { get; set; } = "Full Groom";
+    void SaveChanges(string message, Severity severity){ Snackbar.Add(message, severity, config =>  { config.ShowCloseIcon = false;  }); }
+    
+    public class ServiceType
+    {
+        public ServiceType(string name) { Name = name; }
+        public readonly string Name;
+        public override bool Equals(object o) {var other = o as ServiceType; return other?.Name==Name;}
+        public override int GetHashCode() => Name?.GetHashCode() ?? 0;
+        public override string ToString() => Name;
+    }
+    
+}

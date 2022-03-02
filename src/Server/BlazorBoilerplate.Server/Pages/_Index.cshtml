@@ -17,8 +17,8 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="author" content="Enkodellc / Keith Fimreite, Giovanni Quarella">
-    <meta name="description" content="Blazor Boilerplate & Starter Kit - A real world Example ">
+    <meta name="author" content="SlickSys Development Corp">
+    <meta name="description" content="The start of the end.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     @if (mainConfiguration.Value.Runtime == Shared.Dto.Db.BlazorRuntime.Server)
@@ -74,6 +74,12 @@
     <script src="js/interop.js"></script>
     <!-- https://docs.microsoft.com/en-us/aspnet/core/blazor/progressive-web-app -->
     <script>navigator.serviceWorker.register('service-worker.js');</script>
+    <script>
+    function accessDOMElement() {
+        var btn = document.getElementById('btn');
+        btn.innerText = "Button Textchanged";
+    }
+    </script>
 
     @if (mainConfiguration.Value.Runtime == Shared.Dto.Db.BlazorRuntime.Server)
     {

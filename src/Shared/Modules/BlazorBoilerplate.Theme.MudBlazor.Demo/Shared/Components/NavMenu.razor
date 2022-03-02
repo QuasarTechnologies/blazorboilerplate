@@ -7,6 +7,12 @@
     @L["AppNavHome"]
 </MudNavLink>
 
+<MudNavLink Href="@navigationManager.ToAbsoluteUri("clients").AbsoluteUri" Icon="@Icons.Filled.Mood" IconColor="Color.Secondary">Clients</MudNavLink>
+<MudNavLink Href="@navigationManager.ToAbsoluteUri("appointment").AbsoluteUri" Icon="@Icons.Filled.Mouse" IconColor="MudBlazor.Color.Success">Appointments</MudNavLink>
+<MudNavLink Href="@navigationManager.ToAbsoluteUri("personal").AbsoluteUri" Icon="@Icons.Filled.Mouse" IconColor="MudBlazor.Color.Success">Sample Profile</MudNavLink>
+<MudNavLink Href="@navigationManager.ToAbsoluteUri("sampledash").AbsoluteUri" Icon="@Icons.Filled.Dangerous" IconColor="MudBlazor.Color.Warning">Sample Dash</MudNavLink>
+
+
 <MudNavLink Href="@navigationManager.ToAbsoluteUri("todos-virtualtable").AbsoluteUri" Icon="@Icons.Filled.ListAlt">
     @L["TodoNav"] Virtual Table
 </MudNavLink>

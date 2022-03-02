@@ -23,8 +23,9 @@ namespace BlazorBoilerplate.Shared.Services
         public AppState(IApiClient apiClient, IStringLocalizer<Global> l)
         {
             L = l;
-            AppName = L["AppName"].ToString().Humanize(LetterCasing.Title);
-            AppShortName = L["AppShortName"].ToString().Humanize(LetterCasing.Title);
+            //TODO - Add application name to language file
+            AppName = "SSDCPortal";   //L["AppName"].ToString().Humanize(LetterCasing.Title);
+            AppShortName = "SSDC";    //L["AppShortName"].ToString().Humanize(LetterCasing.Title);
             _apiClient = apiClient;
         }
 

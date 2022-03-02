@@ -1,0 +1,749 @@
+@page "/clients"
+@inject ISnackbar Snackbar
+@using Mdl =  BlazorBoilerplate.Shared.Models
+@using System.Text.RegularExpressions
+@using System.ComponentModel.DataAnnotations
+@using System
+<TopSection>
+    <Breadcrumbs>
+        <Breadcrumb Title="Client Admin"/>
+    </Breadcrumbs>
+</TopSection>
+
+<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4" Style="margin-left: 10px;">Clients</MudText>
+<MudTabs Elevation="25" Color="Color.Transparent" Rounded="true" PanelClass="mt-6">
+
+<MudTabPanel Text="Client">
+    <MudGrid>
+        <MudItem xs="12" sm="4" md="3">
+            <MudCard Elevation="25">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText>Client Profile</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <div class="d-flex justify-center mb-4">
+                        <MudAvatar Image="@AvatarImageLink" Style="height:100px; width:100px;">
+                            @if(AvatarImageLink == null)
+                            {
+                                <MudIcon Icon="@AvatarIcon" Size="Size.Large"></MudIcon>
+                            }
+                        </MudAvatar>
+
+                        <MudAvatar Image="@AvatarImageLink" Style="height:100px; width:100px;background-color: #28a745;">
+                            @* if(AvatarImageLink == null)
+                                //{*@
+                            <MudIcon Icon="@AvatarIcon" Style="font-size:5rem;"></MudIcon>
+                        </MudAvatar>
+                    </div>
+                    <MudText Align="Align.Center">@PetName</MudText>
+                    <MudText Align="Align.Center">@JobTitle</MudText>
+                </MudCardContent>
+                <MudCardActions Class="d-flex justify-center">
+                    <MudButton OnClick="DeletePicture" Color="@AvatarButtonColor">@AvatarButtonText</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" sm="8" md="9">
+            <MudCard Elevation="25">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText>Profile Details</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@IsActive" Label="Is Active" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <!-- Client Row 1 -->
+                        <MudItem xs="1" md="3">
+                            <MudTextField @bind-Value="@ReferredBy" Label="ReferredBy" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="1" md="1">
+                            <MudTextField @bind-Value="@Salutation" Label="Salutation" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="5" md="5">
+                            <MudTextField @bind-Value="@FirstName" Label="First Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@LastName" Label="Last Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@SSN" Label="S.S.N" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@DLNumber" Label="Driver Lic." Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@SpouseSSN" Label="Spouse S.S.N" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@SpouseDLNumber" Label="Spouse Driver Lic." Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <!-- Spouse Row 2 -->
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@SpouseFirst" Label="Spouse First Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@SpouseLast" Label="Spouse Last Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <!-- Dates of Birth Row 2 -->
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@ClientDOB" Label="Client's Date of Birth" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@SpouseDOB" Label="Spouse Date of Birth" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <!-- Address 1 Row 3 -->
+                        <MudItem xs="12" md="4">
+                            <MudTextField @bind-Value="@StreetAddress1" Label="Street Address 1" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="12" md="4">
+                            <MudTextField @bind-Value="@StreetAddress2" Label="Street Address 2" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <!-- City, State, zip Row 4 -->
+                        <MudItem xs="5" md="4">
+                            <MudTextField @bind-Value="@City" Label="City" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="2" md="4">
+                            <MudTextField @bind-Value="@State" Label="State" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="5" md="4">
+                            <MudTextField @bind-Value="@Zip" Label="Zip" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <!-- Phone Numbers Row 5 -->
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@HomePhone" Label="Primary Phone" Variant="Variant.Filled" InputType="InputType.Telephone" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@CellPhone" Label="Spouse Phone" Variant="Variant.Filled" InputType="InputType.Telephone" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <!-- Email addys Row 6 -->
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@Email" Label="Email" Variant="Variant.Filled" HelperText="This is a required field." InputType="InputType.Email" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@PreferredCommId" Label="Preferred Communication" Variant="Variant.Filled" HelperText="This is a required field." InputType="InputType.Email" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@TaxExempt" Label="Tax Exempt" Variant="Variant.Filled" HelperText="This is a required field." InputType="InputType.Email" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudSwitch @bind-Checked="@AdminSwitch" Color="Color.Secondary" Label="Is New Client"/>
+                        </MudItem>
+                        <!-- First Visit Anniversary 2 -->
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@FirstVisit" Label="First Visit" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@FirstEmployee" Label="Employee on First Visit" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@TotalSales" Label="Total Sales" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@YtdTotalSales" Label="YTD Sales" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@YtdTotalReferrals" Label="YTD Referrals" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <i class="bi bi-sunglasses"></i>
+                            <MudTextField @bind-Value="@YtdTotalVisits" Label="YTD  Visits" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <!-- Row Anniversary 2 -->
+                        <MudItem xs="6" md="4">
+                            <span>
+                                this one is from the svg
+                            </span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sunglasses" viewBox="0 0 32 32">
+                              <path d="M3 5a2 2 0 0 0-2 2v.5H.5a.5.5 0 0 0 0 1H1V9a2 2 0 0 0 2 2h1a3 3 0 0 0 3-3 1 1 0 1 1 2 0 3 3 0 0 0 3 3h1a2 2 0 0 0 2-2v-.5h.5a.5.5 0 0 0 0-1H15V7a2 2 0 0 0-2-2h-2a2 2 0 0 0-1.888 1.338A1.99 1.99 0 0 0 8 6a1.99 1.99 0 0 0-1.112.338A2 2 0 0 0 5 5H3zm0 1h.941c.264 0 .348.356.112.474l-.457.228a2 2 0 0 0-.894.894l-.228.457C2.356 8.289 2 8.205 2 7.94V7a1 1 0 0 1 1-1z"/>
+                            </svg>
+                            <MudTextField @bind-Value="@LastVisit" Label="Last Date Visited" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudTextField @bind-Value="@TotalVisits" Label="Total Visits" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudText @bind-Value="@Comment" Label="Comments" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="6" md="4">
+                            <MudText @bind-Value="@TotalReferrals" Label="Total Referrals" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                        </MudItem>
+                        <MudItem xs="12" md="4">
+                            <MudSelect T="LastEmployee" Label="Last Employee"
+                                       Variant="Variant.Filled"
+                                       AnchorOrigin="Origin.BottomCenter"
+                                       Margin="Margin.Dense"
+                                       OnInternalInputChanged="() => { date = _startDate; }">
+                                <MudSelectItem Value="@(new LastEmployee("Josie", "Cat"))"/>
+                                <MudSelectItem Value="@(new LastEmployee("Joe", "Mama"))"/>
+                                <MudSelectItem Value="@(new LastEmployee("Adam", "Ant"))"/>
+                                <MudSelectItem Value="@(new LastEmployee("Billy", "Willy"))"/>
+                                <MudSelectItem Value="@(new LastEmployee("Frank", "Marino"))"/>
+                                <MudSelectItem Value="@(new LastEmployee("John", "Doeball"))"/>
+                            </MudSelect>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+                <MudCardActions Class="pb-4 pl-4">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Profile details saved", Severity.Success))">Save Changes</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+</MudTabPanel>
+<MudTabPanel Text="Pet(s)">
+<MudExpansionPanels>
+
+<!-- MudExpansionPanel Dense="true" Icon="MudIcon." Text="Pet 1" -->
+<MudExpansionPanel Dense="true">
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Pets" class="mr-3"></MudIcon>
+            <MudText>
+                <strong>Cujo</strong>
+            </MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudGrid>
+            <MudItem xs="12" sm="4" md="3">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Pet Profile</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <div class="d-flex justify-center mb-4">
+                            <MudAvatar Image="@AvatarImageLink" Style="height:100px; width:100px;background-color: #28a745;">    
+                                @* if(AvatarImageLink == null)
+                                    //{*@
+                                <MudIcon Icon="@AvatarIcon" Style="font-size:5rem;"></MudIcon>
+                            </MudAvatar>
+                        </div>
+                        <MudText Align="Align.Center">@PetName</MudText>
+                    </MudCardContent>
+                    <MudCardActions Class="d-flex justify-center">
+                        <MudButton OnClick="DeletePicture" Color="@AvatarButtonColor">@AvatarButtonText</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="8" md="9">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Profile Details</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudGrid>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="PetName" Label="Pet Name" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Breed" Label="Breed" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="6" md="4">
+                                <MudTextField @bind-Value="Weight" Label="Weight" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="6" md="4">
+                                <MudTextField @bind-Value="Age" Label="Age" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Species" Label="Species" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Color1" Label="Primary Color" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Color2" Label="Secondary Color" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Color3" Label="Other Colors" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12">
+                                <MudText>
+                                    <b>Admin Only</b>
+                                </MudText>
+                                <MudText Typo="Typo.body2">
+                                    Indicates this information is visible to administrators only.
+                                </MudText>
+                                <MudSwitch @bind-Checked="@AdminSwitch" Color="Color.Secondary"/>
+                            </MudItem>
+                        </MudGrid>
+                    </MudCardContent>
+                    <MudCardActions Class="pb-4 pl-4">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Profile details saved", Severity.Success))">Save Changes</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel Dense="true">
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Pets" class="mr-3"></MudIcon>
+            <MudText>
+                <strong>Cosmo</strong>
+            </MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudGrid>
+            <MudItem xs="12" sm="4" md="3">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Pet Profile</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <div class="d-flex justify-center mb-4">
+                            <MudAvatar Image="@AvatarImageLink" Style="height:100px, width:100px,background-color: #28a745">
+                                @* if(AvatarImageLink == null)
+                                                //{*@
+                                <MudIcon Icon="@AvatarIcon" Style="font-size:5rem,"></MudIcon>
+                            </MudAvatar>
+                        </div>
+                        <MudText Align="Align.Center">@PetName</MudText>
+                    </MudCardContent>
+                    <MudCardActions Class="d-flex justify-center">
+                        <MudButton OnClick="DeletePicture" Color="@AvatarButtonColor">@AvatarButtonText</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="8" md="9">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Profile Details</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudGrid>
+                            <MudItem xs="12" md="4">
+                                <MudAvatar Color="Color.Error">
+                                    <MudImage Src="../images/pug.svg"></MudImage>
+                                </MudAvatar>
+                                <MudTextField @bind-Value="PetName" Label="Pet Name" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Breed" Label="Breed" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="6" md="4">
+                                <MudTextField @bind-Value="Weight" Label="Weight" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="6" md="4">
+                                <MudTextField @bind-Value="Age" Label="Age" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Species" Label="Species" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Color1" Label="Primary Color" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Color2" Label="Secondary Color" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Color3" Label="Other Colors" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12">
+                                <MudText>
+                                    <b>Admin Only</b>
+                                </MudText>
+                                <MudText Typo="Typo.body2">
+                                    Indicates this information is visible to administrators only.
+                                </MudText>
+                                <MudSwitch @bind-Checked="@AdminSwitch" Color="Color.Secondary"/>
+                            </MudItem>
+                        </MudGrid>
+                    </MudCardContent>
+                    <MudCardActions Class="pb-4 pl-4">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Profile details saved", Severity.Success))">Save Changes</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </ChildContent>
+</MudExpansionPanel>
+<MudExpansionPanel Dense="true">
+    <TitleContent>
+        <div class="d-flex">
+            <MudIcon Icon="@Icons.Material.Filled.Pets" class="mr-3"></MudIcon>
+            <MudText>
+                <strong>Sahsa</strong>
+            </MudText>
+        </div>
+    </TitleContent>
+    <ChildContent>
+        <MudGrid>
+            <MudItem xs="12" sm="4" md="3">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Pet Profile</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <div class="d-flex justify-center mb-4">
+                            <MudAvatar Image="@AvatarImageLink" Style="height:100px; width:100px;background-color: #28a745;">
+                                @* if(AvatarImageLink == null)
+                                                //{*@
+                                <MudIcon Icon="@AvatarIcon" Style="font-size:5rem;"></MudIcon>
+                            </MudAvatar>
+                        </div>
+                        <MudText Align="Align.Center">@PetName</MudText>
+                    </MudCardContent>
+                    <MudCardActions Class="d-flex justify-center">
+                        <MudButton OnClick="DeletePicture" Color="@AvatarButtonColor">@AvatarButtonText</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" sm="8" md="9">
+                <MudCard Elevation="25">
+                    <MudCardHeader>
+                        <CardHeaderContent>
+                            <MudText>Profile Details</MudText>
+                        </CardHeaderContent>
+                    </MudCardHeader>
+                    <MudCardContent>
+                        <MudGrid>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="PetName" Label="Pet Name" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Breed" Label="Breed" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="6" md="4">
+                                <MudTextField @bind-Value="Weight" Label="Weight" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="6" md="4">
+                                <MudTextField @bind-Value="Age" Label="Age" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Species" Label="Species" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Color1" Label="Primary Color" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Color2" Label="Secondary Color" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+                            <MudItem xs="12" md="4">
+                                <MudTextField @bind-Value="Color3" Label="Other Colors" Variant="Variant.Outlined" Margin="Margin.Dense"/>
+                            </MudItem>
+
+                            <MudItem xs="12">
+                                <MudText>
+                                    <b>Admin Only</b>
+                                </MudText>
+                                <MudText Typo="Typo.body2">
+                                    Indicates this information is visible to administrators only.
+                                </MudText>
+                                <MudSwitch @bind-Checked="@AdminSwitch" Color="Color.Secondary"/>
+                            </MudItem>
+                        </MudGrid>
+                    </MudCardContent>
+                    <MudCardActions Class="pb-4 pl-4">
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Profile details saved", Severity.Success))">Save Changes</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        </MudGrid>
+    </ChildContent>
+</MudExpansionPanel>
+</MudExpansionPanels>
+</MudTabPanel>
+<MudTabPanel Text="Pet Vitals">
+    <MudCard>
+        @* <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText>Notifications</MudText>
+                </CardHeaderContent>
+            </MudCardHeader> *@
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="4">
+                    <MudText>
+                        <b>Attributes</b>
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        Please check all that apply:
+                    </MudText>
+                    <div class="d-flex flex-column mt-6">
+                        <MudCheckBox @bind-Checked="@Warning_1" Label="Easy" Color="Color.Success"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_2" Label="Fair" Color="Color.Warning"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_3" Label="Difficult" Color="Color.Error"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_4" Label="Biter" Color="Color.Primary"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_5" Label="Soils Cage" Color="Color.Primary"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_6" Label="Noisy" Color="Color.Primary"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_7" Label="Shy" Color="Color.Primary"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_8" Label="Biter" Color="Color.Error"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_9" Label="Blind" Color="Color.Primary"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_10" Label="Deaf" Color="Color.Primary"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_11" Label="Diabetic" Color="Color.Primary"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_12" Label="Epileptic" Color="Color.Error"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_13" Label="Deaf" Color="Color.Primary"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Warning_14" Label="Burns Easily" Color="Color.Primary"></MudCheckBox>
+                    </div>
+                </MudItem>
+                <MudItem xs="12" sm="8">
+                    <MudText>
+                        <b>Noteable ToDo's</b>
+                    </MudText>
+                    <MudText Typo="Typo.body2">
+                        Please do the following each visit:
+                    </MudText>
+                    <div class="d-flex flex-column mt-6">
+                        <MudCheckBox @bind-Checked="@Notable_1" Label="Check Anals" Color="Color.Primary"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Notable_2" Label="Check Ears" Color="Color.Error"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Notable_3" Label="Check Fleas" Color="Color.Warning"></MudCheckBox>
+                        <MudCheckBox @bind-Checked="@Notable_4" Label="Brush Teeth" Color="Color.Success"></MudCheckBox>
+                    </div>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+        <MudCardActions Class="pb-4 pl-4">
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Notification settings saved", Severity.Success))">Save Changes</MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudTabPanel>
+<MudTabPanel Text="Notes">
+    <MudForm @ref="form">
+        <MudCard>
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText>Change Password</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudGrid>
+                    <MudItem xs="12" md="4">
+                        <MudTextField T="string" Label="Password" Variant="Variant.Outlined" InputType="InputType.Password" @ref="pwField1" Required="true" RequiredError="Password is required!"/>
+                    </MudItem>
+                    <MudItem xs="12" md="4">
+                        <MudTextField T="string" Label="Password Confirmation" Variant="Variant.Outlined" InputType="InputType.Password"/>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField T="string" Label="Current Password" Variant="Variant.Outlined" InputType="InputType.Password"/>
+                    </MudItem>
+                </MudGrid>
+            </MudCardContent>
+            <MudCardActions Class="pb-4 pl-4">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" @onclick="@(() => SaveChanges("Profile details saved", Severity.Success))">Save Changes</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudForm>
+</MudTabPanel>
+</MudTabs>
+
+@code{
+
+    private List<Mdl.Client> clients { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        clients = new List<Mdl.Client>
+        {
+            new Mdl.Client() { ClientGuid = new Guid(), PracticeVid = "1", ClientAccountId = "1", FirstName = "Joe", LastName = "Smith", SpouseFirstName = "val", SpouseLastName = "val", StreetAddress1 = "val", StreetAddress2 = "val", CityStateGuid = new Guid(), Zipcode = "val", HomePhone = "val", WorkPhone = "val", EmailAddress = "val", Active = true, FirstVisit = DateTime.Now, LatestVisit = DateTime.Now, TotalSales = 321.58m, Deleted = false, Salutation = "Mr.", CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), MonetaryFlag = "$", DiscountGuid = new Guid(), Comment = "val", TotalVisits = 22, ReferralSourceGuid = new Guid(), TotalReferrals = 2, ClientTypeGuid = new Guid(), ImageGuid = new Guid(), SocialSecurNum = "321-54-9878", SpouseSocialSecurNum = "456-54-9633", PreferredCommMethodGuid = new Guid(), FaxNumber = "val", DeletedUniqifyingGuid = new Guid(), TaxExempt = false, DriverLicense = "BR549", SpouseDriverLicense = "BR974", PreviousAccountId = "val", YtdTotalSales = 123.83m, YtdTotalReferrals = 2, YtdTotalVisits = 5 },
+            new Mdl.Client() { ClientGuid = new Guid(), PracticeVid = "1", ClientAccountId = "2", FirstName = "Gail", LastName = "Whoknows", SpouseFirstName = "val", SpouseLastName = "val", StreetAddress1 = "val", StreetAddress2 = "val", CityStateGuid = new Guid(), Zipcode = "val", HomePhone = "val", WorkPhone = "val", EmailAddress = "val", Active = true, FirstVisit = DateTime.Now, LatestVisit = DateTime.Now, TotalSales = 321.58m, Deleted = false, Salutation = "Mr.", CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), MonetaryFlag = "$", DiscountGuid = new Guid(), Comment = "val", TotalVisits = 22, ReferralSourceGuid = new Guid(), TotalReferrals = 2, ClientTypeGuid = new Guid(), ImageGuid = new Guid(), SocialSecurNum = "321-54-9878", SpouseSocialSecurNum = "456-54-9633", PreferredCommMethodGuid = new Guid(), FaxNumber = "val", DeletedUniqifyingGuid = new Guid(), TaxExempt = false, DriverLicense = "BR549", SpouseDriverLicense = "BR974", PreviousAccountId = "val", YtdTotalSales = 123.83m, YtdTotalReferrals = 2, YtdTotalVisits = 5 },
+            new Mdl.Client() { ClientGuid = new Guid(), PracticeVid = "1", ClientAccountId = "3", FirstName = "Sam", LastName = "IdontCare", SpouseFirstName = "val", SpouseLastName = "val", StreetAddress1 = "val", StreetAddress2 = "val", CityStateGuid = new Guid(), Zipcode = "val", HomePhone = "val", WorkPhone = "val", EmailAddress = "val", Active = true, FirstVisit = DateTime.Now, LatestVisit = DateTime.Now, TotalSales = 321.58m, Deleted = false, Salutation = "Mr.", CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), MonetaryFlag = "$", DiscountGuid = new Guid(), Comment = "val", TotalVisits = 22, ReferralSourceGuid = new Guid(), TotalReferrals = 2, ClientTypeGuid = new Guid(), ImageGuid = new Guid(), SocialSecurNum = "321-54-9878", SpouseSocialSecurNum = "456-54-9633", PreferredCommMethodGuid = new Guid(), FaxNumber = "val", DeletedUniqifyingGuid = new Guid(), TaxExempt = false, DriverLicense = "BR549", SpouseDriverLicense = "BR974", PreviousAccountId = "val", YtdTotalSales = 123.83m, YtdTotalReferrals = 2, YtdTotalVisits = 5 }
+
+    //         ,new Mdl.Client() {
+
+    //             AvatarImageLink  = null,
+    //Salutation  = "Mr.",
+    //TotalReferrals  = "Mr.",
+    //ReferredBy  = "George",
+    //AvatarIcon  = Icons.Material.Filled.Pets,
+    //AvatarButtonText  = "Upload Picture",
+    //AvatarButtonColor  = Color.Secondary,
+    //PetName  = "Cujo",
+    //FirstName  = "Fred",
+    //LastName  = "Smith",
+    //SpouseFirst  = "Beverly",
+    //SpouseLast  = "Smith",
+    //SSN  = "321-22-6544",
+    //SpouseSSN  = "321-22-6544",
+    //FirstVisit  = DateTime.Parse("Dec 1, 1946"),
+    //FirstEmployee  = "FirstEmployee",
+    //PreferredCommId  = 1,
+    //TaxExempt  = false,
+    //DLNumber  = "L344-222-22",
+    //SpouseDLNumber  = "L344-222-22",
+    //YtdTotalSales  = 234m,
+    //YtdTotalReferrals  = 231,
+    //YtdTotalVisits  = 88
+
+    //     }
+        };
+
+    }
+
+
+
+
+    public string      AvatarImageLink { get; set; } = null;
+    public string      Salutation { get; set; } = "Mr.";
+    public string      TotalReferrals { get; set; } = "Mr.";
+    public string      ReferredBy { get; set; } = "George";
+    public string      AvatarIcon { get; set; } = Icons.Material.Filled.Pets;
+    public string      AvatarButtonText { get; set; } = "Upload Picture";
+    public Color       AvatarButtonColor { get; set; } = Color.Secondary;
+    private string     PetName { get; set; } = "Cujo";
+    private string     FirstName { get; set; } = "Fred";
+    private string     LastName { get; set; } = "Smith";
+    private string     SpouseFirst { get; set; } = "Beverly";
+    private string     SpouseLast { get; set; } = "Smith";
+    private string     SSN { get; set; } = "321-22-6544";
+    private string     SpouseSSN { get; set; } = "321-22-6544";
+    private DateTime?   FirstVisit { get; set; } = new DateTime();
+    public string      FirstEmployee { get; set; } = "FirstEmployee";
+    public int         PreferredCommId { get; set; } = 1;
+    public bool        TaxExempt { get; set; } = false;
+    public string      DLNumber { get; set; } = "L344-222-22";
+    public string      SpouseDLNumber { get; set; } = "L344-222-22";
+    public decimal     YtdTotalSales { get; set; } = 234m;
+    public int         YtdTotalReferrals { get; set; } = 231;
+    public int         YtdTotalVisits { get; set; } = 88;
+
+    public DateTime? ClientDOB { get; set; } = new DateTime();
+    public DateTime? SpouseDOB { get; set; } = new DateTime();
+    public DateTime? LastVisit { get; set; } = new DateTime();
+    public decimal  TotalSales { get; set; } = 230.00m;
+    public bool     IsActive { get; set; } = true;
+    public string   Comment { get; set; } = "There once was a man from Nantucket...";
+    public int TotalVisits { get; set; } = 25;
+    
+
+    //public string LastEmployee { get; set; } = "Aglioliolioliolio";
+    public string Discount { get; set; } = "Amount of Discount";
+    public int DiscountId { get; set; } = 564;
+
+
+    private string StreetAddress1 { get; set; } = "5711 NW 12 ct.";
+    private string StreetAddress2 { get; set; } = "Apartment C";
+    private string City { get; set; } = "Miami";
+    private string State { get; set; } = "FL";
+    private string Zip { get; set; } = "33313";
+    private string HomePhone { get; set; } = "561-654-5555";
+    private string CellPhone { get; set; } = "654-222-5466";
+
+    private string Breed { get; set; } = "Chihuahua";
+    private string Species { get; set; } = "Canine";
+    private string Weight { get; set; } = "9 lbs";
+    private string Color1 { get; set; } = "White";
+    private string Color2 { get; set; } = "Brown";
+    private string Color3 { get; set; } = "Spots";
+    private string Age { get; set; } = "13 Years";
+
+    private string JobTitle { get; set; } = "IT Consultant";
+    private string Email { get; set; } = "Youcanprobably@findout.com";
+
+
+    private bool AdminSwitch { get; set; } = true;
+
+
+    private bool Warning_1 { get; set; } = true;
+    private bool Warning_2 { get; set; }
+    private bool Warning_3 { get; set; }
+    private bool Warning_4 { get; set; } = true;
+    private bool Warning_5 { get; set; }
+    private bool Warning_6 { get; set; }
+    private bool Warning_7 { get; set; } = true;
+    private bool Warning_8 { get; set; }
+    private bool Warning_9 { get; set; } = true;
+    private bool Warning_10 { get; set; } = true;
+    private bool Warning_11 { get; set; } = true;
+    private bool Warning_12 { get; set; }
+    private bool Warning_13 { get; set; } = true;
+    private bool Warning_14 { get; set; }
+
+
+    private bool Notable_1 { get; set; }
+    private bool Notable_2 { get; set; } = true;
+    private bool Notable_3 { get; set; } = true;
+    private bool Notable_4 { get; set; }
+
+    DateTime? _startDate = DateTime.Now.Add(TimeSpan.FromDays(5));
+    DateTime? date = DateTime.Today;
+
+    void DeletePicture()
+    {
+        if (!String.IsNullOrEmpty(AvatarImageLink))
+        {
+            AvatarImageLink = null;
+            AvatarIcon = Icons.Material.Filled.Pets;
+            AvatarButtonText = "Upload Picture";
+            AvatarButtonColor = Color.Secondary;
+        }
+        else
+        {
+            return;
+        }
+    }
+    MudForm form;
+    MudTextField<string> pwField1;
+
+    private IEnumerable<string> PasswordStrength(string pw)
+    {
+        if (string.IsNullOrWhiteSpace(pw))
+        {
+            yield return "Password is required!";
+            yield break;
+        }
+        if (pw.Length < 8)
+            yield return "Password must be at least of length 8";
+        if (!Regex.IsMatch(pw, @"[A-Z]"))
+            yield return "Password must contain at least one capital letter";
+        if (!Regex.IsMatch(pw, @"[a-z]"))
+            yield return "Password must contain at least one lowercase letter";
+        if (!Regex.IsMatch(pw, @"[0-9]"))
+            yield return "Password must contain at least one digit";
+    }
+
+    private string PasswordMatch(string arg)
+    {
+        if (pwField1.Value != arg)
+            return "Passwords don't match";
+        return null;
+    }
+    void SaveChanges(string message, Severity severity)
+    {
+        Snackbar.Add(message, severity, config =>
+        {
+            config.ShowCloseIcon = false;
+        });
+    }
+
+   public class russian
+    {
+        public string stink { get; set; }
+        public string look { get; set; }
+        public string asshole { get; set; }
+        public string stunk { get; set; }
+        public string stank { get; set; }
+    }
+
+    public class LastEmployee
+    {
+        public LastEmployee(string firstname, string lastname)
+        {
+            FirstName = firstname;
+            LastName = lastname;
+        }
+
+        public readonly string FirstName;
+        public readonly string LastName;
+
+        public override int GetHashCode() => FirstName?.GetHashCode() ?? 0;
+        public override string ToString() => FirstName;
+    }
+}

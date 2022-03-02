@@ -1,9 +1,12 @@
 ﻿@implements IDynamicComponent
+@* inject LayoutService *@
 
 <div class="d-none d-md-flex align-center">
-    <DonateButton />
-    <MudTooltip Text="Github Repository">
-        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/enkodellc/blazorboilerplate" Target="_blank" />
+ 
+    <MudTooltip Duration="1000" Text="Switch to Light Theme">
+        <MudIconButton 
+            Icon="@Icons.Material.Outlined.DarkMode" 
+            Color="Color.Inherit"/>
     </MudTooltip>
     <MudTooltip Text="Admin">
         <MudIconButton Icon="@Icons.Filled.Settings" Color="Color.Inherit" Link="/admin" />
