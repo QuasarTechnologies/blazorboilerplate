@@ -12,6 +12,8 @@ public class Client
     public string StreetAddress1 { get; set; }
     public string StreetAddress2 { get; set; }
     public Guid CityStateGuid { get; set; }
+    public string City { get; set; }
+    public string State { get; set; }
     public string Zipcode { get; set; }
     public string HomePhone { get; set; }
     public string WorkPhone { get; set; }
