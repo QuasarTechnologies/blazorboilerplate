@@ -1,0 +1,375 @@
+﻿@page "/woohoo"
+
+@inject IApiClient apiClient
+@inject ISnackbar Snackbar
+
+@inject IViewNotifier viewNotifier
+@inject IStringLocalizer<Global> L
+@inject HttpClient httpClient
+
+@inherits WooHooBasePage
+
+@using BlazorBoilerplate.Theme.MudBlazorShared.Components.SSDCPortalApp;
+@using BlazorBoilerplate.Theme.Material.Demo.Pages
+@using System.Net.Http.Json
+
+<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+    <MudGrid>
+        <MudItem xs="12" sm="12" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 135px; background-color: #FFE400;" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="4">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 135px; background-color: #3B6F00;" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="1">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 135px; background-color: #6F0055;" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="1">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 135px; background-color: #6F1C00;" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="1">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 135px; background-color: #346F00;" />
+        </MudItem>
+        <MudItem xs="12" sm="12" md="1">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 135px; background-color:#4E006F;" />
+        </MudItem>
+
+        <!-- Row-1 -->
+        <MudItem xs="12" sm="12" md="2">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 535px;">
+                <MudCardContent>
+                    <MudSelect T="string" Label="Test Component" Dense="true" OffsetY="true" Value="@SelectedTestComponent" ValueChanged="OnSelectedTestComponent" Class="mb-4">
+                        <MudSelectItem T="string" Value="@(" MudIcon")">MudIcon</MudSelectItem>
+                        <MudSelectItem T="string" Value="@(" MudButton")">MudButton</MudSelectItem>
+                        <MudSelectItem T="string" Value="@(" MudIconButton")">MudIconButton</MudSelectItem>
+                        <MudSelectItem T="string" Value="@(" MudText")">MudText</MudSelectItem>
+                    </MudSelect>
+                    <MudText Typo="Typo.subtitle2" GutterBottom="true">Badge Options</MudText>
+                    <MudCheckBox @bind-Checked="@Bottom" Label="Bottom" Color="Color.Primary" Style="width: 100%;" />
+                    <MudCheckBox @bind-Checked="@Dot" Label="Dot" Color="Color.Primary" Style="width: 100%;" />
+                    <MudCheckBox @bind-Checked="@Start" Label="Start" Color="Color.Primary" Style="width: 100%;" />
+                    <MudCheckBox @bind-Checked="@Overlap" Label="Overlap" Color="Color.Primary" Style="width: 100%;" />
+                    <MudCheckBox @bind-Checked="@Bordered" Label="Bordered" Color="Color.Primary" Style="width: 100%;" />
+                    <MudCheckBox T="bool" CheckedChanged="AddIcon" Label="Icon" Color="Color.Primary" Style="width: 100%;" />
+                    <MudText Typo="Typo.subtitle2" Class="my-2">Badge Content</MudText>
+                    <div style="display: flex;">
+                        <MudButton OnClick="AddValue" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" Style="width: 100%;" Class="mr-1">Add @AddNumber</MudButton>
+                        <MudButton OnClick="ClearContent" Variant="Variant.Filled" Size="Size.Small" Color="Color.Secondary" Style="width: 100%;" Class="ml-1">Clear</MudButton>
+                    </div>
+                </MudCardContent>
+
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="8">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 535px;">
+                @*<MudCard>
+                *@
+
+                <MudTable Items="null" Dense="@dense" Hover="@hover" Bordered="@bordered" Striped="@striped" @bind-SelectedItem="@selectedItem1">
+                    <ToolBarContent>
+                        <MudText Typo="Typo.h6">ToDo List</MudText>
+                        <MudSpacer />
+                        <MudTextField @bind-Value="searchString1" Placeholder="Search" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                    </ToolBarContent>
+                    <HeaderContent>
+                        <MudTh>Icon</MudTh>
+                        <MudTh>Record Id</MudTh>
+                        <MudTh>Is Complete</MudTh>
+                        <MudTh>Title</MudTh>
+                        <MudTh>Created On</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Icon"><MudIconButton Icon="delete" OnClick="@(() => OpenDeleteDialog(context.Id))"></MudIconButton></MudTd>
+                        <MudTd DataLabel="Record Id">@String.Format("{0:d}", @context.Id)</MudTd>
+                        <MudTd DataLabel="Is Complete">Is Completed = @context.IsCompleted.ToString()</MudTd>
+                        <MudTd DataLabel="Title">@context.Title</MudTd>
+                        <MudTd DataLabel="Created On">@context.CreatedOn</MudTd>
+                    </RowTemplate>
+                    <PagerContent>
+                        <MudTablePager />
+                    </PagerContent>
+                </MudTable>
+
+                <div class="d-flex flex-wrap mt-4">
+                    <MudSwitch @bind-Checked="@hover" Color="Color.Primary">Hover</MudSwitch>
+                    <MudSwitch @bind-Checked="@dense" Color="Color.Secondary">Dense</MudSwitch>
+                    <MudSwitch @bind-Checked="@striped" Color="Color.Tertiary">Striped</MudSwitch>
+                    <MudSwitch @bind-Checked="@bordered" Color="Color.Warning">Bordered</MudSwitch>
+                    <MudSpacer />
+                    <div style="min-width: 200px;">
+                        <MudText Inline="true" Class="align-self-center">Selected1: @selectedItem1?.Title</MudText>
+                    </div>
+                </div>
+                @*
+                    </MudCard>*@
+
+                <MudButton OnClick="OpenDialog" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" Style="width: 100%;" Class="mr-1">New</MudButton>
+
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="12" md="2">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 535px;">
+
+            </MudPaper>
+        </MudItem>
+
+        <!-- Row-2 -->
+
+        <MudItem xs="12" sm="6" md="8">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 470px;">
+                <SSDCPortalApp />
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="4">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 100px;"></MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 100px;"></MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 100px;"></MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 100px;"></MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <!-- Row-3 -->
+        <MudItem xs="12" sm="6">
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+                </MudItem>
+            </MudGrid>
+        </MudItem>
+
+        <MudItem xs="12" sm="6">
+            <MudPaper Elevation="2" Class="pa-4" Style="height: 100%"></MudPaper>
+        </MudItem>
+
+    </MudGrid>
+
+</MudContainer>
+
+
+<MudDialog @bind-IsVisible="@dialogIsOpen" Class="mx-md-6">
+    <TitleContent>Create Todo</TitleContent>
+    <DialogContent>
+        <EditForm Model="@todo" OnValidSubmit="@NewEntity">
+            <FluentValidationValidator />
+            <ValidationSummary />
+            <MudTextField @bind-Value="@todo.Title" Label="Title" Icon="title" IconTrailing="true" FullWidth="true" Required="true"></MudTextField>
+            <MudSpacer></MudSpacer>
+
+            <MudCheckBox T="bool" Checked="@todo.IsCompleted" Label="Completed"></MudCheckBox>
+        </EditForm>
+    </DialogContent>
+
+    <DialogActions>
+        <MudButton OnClick="@(e => { dialogIsOpen = false; })">@L["Cancel"]</MudButton>
+        <MudButton OnClick="@NewEntity">Create Todo</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<MudDialog @bind-IsVisible="@deleteDialogOpen" Style="z-index:100">
+    <TitleContent><MudIcon Icon="warning"></MudIcon> @L["Confirm Delete"]</TitleContent>
+    <DialogContent>
+        @L["Are you sure you want to delete {0}?", todo.Title]
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(e => { deleteDialogOpen = false; })">@L["Cancel"]</MudButton>
+        <MudButton OnClick="@Delete">@L["Delete"]</MudButton>
+    </DialogActions>
+</MudDialog>
+
+  @*<MudDialog  @bind-IsOpen="@deleteDialogOpen" Style="z-index:100">
+        <TitleContent><MudIcon Icon="warning"></MudIcon> @L["Confirm Delete"]</TitleContent>
+        <DialogContent>
+            @L["Are you sure you want to delete {0}?", todo.Title]
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="@(e => { deleteDialogOpen = false; })">@L["Cancel"]</MudButton>
+            <MudButton OnClick="@Delete">@L["Delete"]</MudButton>
+        </DialogActions>
+    </MudDialog>*@
+
+@code {
+
+    #region Row1-Col1
+
+    public bool Bottom { get; set; }
+    public bool Dot { get; set; }
+    public bool Start { get; set; }
+    public bool Overlap { get; set; }
+    public bool Bordered { get; set; }
+    public string BadgeIcon { get; set; }
+    public string SelectedTestComponent { get; set; } = "MudIcon";
+    public string AddNumber { get; set; } = "1";
+    public int? BadgeContent { get; set; }
+    private DialogOptions dialogOptions = new() { MaxWidth = 0, FullWidth = true };
+    public void OnSelectedTestComponent(string value)
+    {
+        SelectedTestComponent = value;
+    }
+
+    public void AddIcon()
+    {
+        if (String.IsNullOrEmpty(BadgeIcon))
+        {
+            BadgeIcon = Icons.Custom.Uncategorized.Radioactive;
+        }
+        else
+        {
+            BadgeIcon = null;
+        }
+    }
+    public void AddValue()
+    {
+        if (BadgeContent == null)
+        {
+            AddNumber = "25";
+            BadgeContent = 1;
+        }
+        else
+        {
+            BadgeContent += 25;
+        }
+    }
+
+    public void ClearContent()
+    {
+        AddNumber = "1";
+        BadgeContent = null;
+    }
+
+    #endregion
+
+    #region Row1-Col2
+
+
+    private bool dense = false;
+    private bool hover = true;
+    private bool striped = false;
+    private bool bordered = false;
+    private string searchString1 = "";
+    private string searchString2 = "";
+    private Todo selectedItem1 = null;
+    private Todo selectedItem2 = null;
+
+    private HashSet<Todo>
+        selectedItems = new HashSet<Todo>
+            ();
+
+
+
+    bool deleteDialogOpen = false;
+    bool dialogIsOpen = false;
+    List<Todo> todos = new List<Todo>();
+    private Todo selectedItem = null;
+    Todo todo { get; set; } = new Todo();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadMainEntities();
+    }
+
+    async Task LoadMainEntities()
+    {
+        try
+        {
+            var filter = new ToDoFilter();
+
+            var result = await apiClient.GetToDos(null);
+            todos = new List<Todo>(result);
+
+            viewNotifier.Show(L["One item found", Plural.From("{0} items found", (int)result.InlineCount)], ViewNotifierType.Success, L["Operation Successful"]);
+        }
+        catch (Exception ex)
+        {
+            viewNotifier.Show(ex.GetBaseException().Message, ViewNotifierType.Error, L["Operation Failed"]);
+        }
+    }
+
+    public async void Update(Todo todo)
+    {
+        try
+        {
+            todo.IsCompleted = !todo.IsCompleted;
+
+            await apiClient.SaveChanges();
+
+            viewNotifier.Show($"{todo.Title} updated", ViewNotifierType.Success, L["Operation Successful"]);
+        }
+        catch (Exception ex)
+        {
+            viewNotifier.Show(ex.GetBaseException().Message, ViewNotifierType.Error, L["Operation Failed"]);
+        }
+    }
+
+    public async Task Delete()
+    {
+        try
+        {
+            apiClient.RemoveEntity(todo);
+            await apiClient.SaveChanges();
+            todos.Remove(todo);
+            viewNotifier.Show($"{todo.Title} deleted", ViewNotifierType.Success, L["Operation Successful"]);
+        }
+        catch (Exception ex)
+        {
+            viewNotifier.Show(ex.GetBaseException().Message, ViewNotifierType.Error, L["Operation Failed"]);
+        }
+
+        todo = new Todo();
+
+
+        deleteDialogOpen = false;
+    }
+
+    public void OpenDialog()
+    {
+        dialogIsOpen = true;
+        //DialogService.Show<DialogUsageExample_Dialog>("Simple Dialog");
+
+    }
+
+    public void OpenDeleteDialog(long todoId)
+    {
+        todo = todos.Where(x => x.Id == todoId).SingleOrDefault();
+        deleteDialogOpen = true;
+    }
+
+    public async Task NewEntity()
+    {
+        dialogIsOpen = false;
+
+        try
+        {
+            apiClient.AddEntity(todo);
+
+            await apiClient.SaveChanges();
+
+            await LoadMainEntities();
+        }
+        catch (Exception ex)
+        {
+            viewNotifier.Show(ex.GetBaseException().Message, ViewNotifierType.Error, L["Operation Failed"]);
+        }
+
+        todo = new Todo();
+
+
+    }
+
+    #endregion
+
+
+}

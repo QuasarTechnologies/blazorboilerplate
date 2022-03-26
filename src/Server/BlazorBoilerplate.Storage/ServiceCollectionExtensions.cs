@@ -52,19 +52,20 @@ namespace BlazorBoilerplate.Storage
 
             if (useSqlServer)
             {
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                var cfgConnStr = configuration.GetConnectionString("CfgDataConnection");
+                var appConnStr = configuration.GetConnectionString("AppDataConnection");
 
-                if(string.IsNullOrEmpty(connectionString))
-                    throw new ArgumentNullException("The DefaultConnection was not found.");
+                if(string.IsNullOrEmpty(cfgConnStr))
+                    throw new ArgumentNullException("The CfgDataConnection was not found.");
+                
+                if(string.IsNullOrEmpty(appConnStr))
+                    throw new ArgumentNullException("The AppDataConnection was not found.");
 
-                if(!connectionString.ToLower().Contains("multipleactiveresultsets=true"))
-                    throw new ArgumentException("When Sql Server is in use the DefaultConnection must contain: MultipleActiveResultSets=true");
+                if(!cfgConnStr.ToLower().Contains("multipleactiveresultsets=true") || !appConnStr.ToLower().Contains("multipleactiveresultsets=true"))
+                    throw new ArgumentException("When Sql Server is in use the connections must contain: MultipleActiveResultSets=true");
 
-                builder.UseSqlServer(connectionString, options =>
-                {
-                    options.CommandTimeout(60);
-                    options.MigrationsAssembly(migrationsAssembly);
-                });
+                builder.UseSqlServer(cfgConnStr, options => { options.CommandTimeout(60); options.MigrationsAssembly(migrationsAssembly); });
+                //builder.UseSqlServer(appConnStr, options => { options.CommandTimeout(60); options.MigrationsAssembly(migrationsAssembly); });
             }
             else
                 builder.UseNpgsql(configuration.GetConnectionString("PostgresConnection"), options => options.MigrationsAssembly(migrationsAssembly));
@@ -79,23 +80,18 @@ namespace BlazorBoilerplate.Storage
             options.ConfigureDbContext = x => GetDbContextOptions<ApplicationDbContext>(x, configuration);
             options.DefaultSchema = "cfg";
             // this enables automatic token cleanup. this is optional.
-            options.EnableTokenCleanup = true;
-
-            options.TokenCleanupInterval = 3600; //In Seconds 1 hour
+            //options.EnableTokenCleanup = true;
+            //options.TokenCleanupInterval = 3600; //In Seconds 1 hour
         });
 
        // public static IIdentityServerBuilder AddIdentityServerStores(this IIdentityServerBuilder builder, IConfiguration configuration) => builder.AddConfigurationStore(options =>
        //     {
        //         options.ConfigureDbContext = x => GetDbContextOptions<ApplicationDbContext>(x, configuration);
-       //         options.DefaultSchema("cfg");
-       //
+       //         options.DefaultSchema("cfg")
        //     }).AddOperationalStore(options =>
        //     {
        //         options.ConfigureDbContext = x => GetDbContextOptions<ApplicationDbContext>(x, configuration);
-       //
-       //         // this enables automatic token cleanup. this is optional.
        //         options.EnableTokenCleanup = true;
-       //
        //         options.TokenCleanupInterval = 3600; //In Seconds 1 hour
        //     });
     }

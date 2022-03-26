@@ -1,0 +1,516 @@
+﻿@page "/clients"
+@inherits ClientsBasePage
+@using FluentValidation
+@attribute [Authorize]
+@inject AppState appState
+@inject IViewNotifier viewNotifier
+
+
+<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4">Dashboard</MudText>
+<MudGrid>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+            <MudIcon Icon="@Icons.Material.Filled.Pets" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+            <div>
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Total Income</MudText>
+                <MudText Typo="Typo.h5">125,000</MudText>
+            </div>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+            <MudIcon Icon="@Icons.Material.Filled.Pets" Color="Color.Secondary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+            <div>
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Total Stock</MudText>
+                <MudText Typo="Typo.h5">150,000</MudText>
+            </div>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+            <MudIcon Icon="@Icons.Material.Filled.Pets" Color="Color.Success" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+            <div>
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Global Sales</MudText>
+                <MudText Typo="Typo.h5">46,000</MudText>
+            </div>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="6" md="3">
+        <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+            <MudIcon Icon="@Icons.Custom.Uncategorized.Radioactive" Color="Color.Warning" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+            <div>
+                <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Roentgen</MudText>
+                <MudText Typo="Typo.h5">3,6</MudText>
+            </div>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="12" sm="12">
+        <MudPaper Elevation="25" Class="pa-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        @*<MudTable ServerData="@GetClients()"*@
+                        <MudTable Items="GetClients()"
+                                  Striped="true"
+                                  Bordered="true"
+                                  Dense="true"
+                                  Hover="true"
+                                  Class="rounded-0 pa-2"
+                                  Elevation="0"
+                                  LoadingProgressColor="Color.Info"
+                                  @ref="table">
+                            <HeaderContent>
+                                <MudTh><MudTableSortLabel SortLabel="PracticevId" T="Client" Style="display:none;">@L["PracticevId"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="ClientAccountId" T="Client">@L["ClientAccountId"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="FirstName" T="Client">@L["FirstName"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="LastName" T="Client">@L["LastName"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="SpouseFirstName" T="Client">@L["SpouseFirstName"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="SpouseLastName" T="Client">@L["SpouseLastName"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="StreetAddress1" T="Client">@L["StreetAddress1"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="StreetAddress2" T="Client">@L["StreetAddress2"]</MudTableSortLabel></MudTh>
+                                @*<MudTh><MudTableSortLabel SortLabel="CityStateGuid" T="Client">@L["CityStateGuid"]</MudTableSortLabel></MudTh>*@
+                                <MudTh><MudTableSortLabel SortLabel="ZipCode" T="Client">@L["ZipCode"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="HomePhone" T="Client">@L["HomePhone"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="WorkPhone" T="Client">@L["WorkPhone"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="EmailAddress" T="Client">@L["EmailAddress"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="Active" T="Client">@L["Active"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="FirstVisit" T="Client">@L["FirstVisit"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="LatestVisit" T="Client">@L["LatestVisit"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="TotalSales" T="Client" Style="display:none;">@L["TotalSales"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="Deleted" T="Client">@L["Deleted"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="Salutation" T="Client">@L["Salutation"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="CreateDateTime" T="Client">@L["CreateDateTime"]</MudTableSortLabel></MudTh>
+                                @*<MudTh><MudTableSortLabel SortLabel="CreateUserGuid" T="Client">@L["CreateUserGuid"]</MudTableSortLabel></MudTh>*@
+                                @*<MudTh><MudTableSortLabel SortLabel="CreateWorkstationGuid" T="Client">@L["CreateWorkstationGuid"]</MudTableSortLabel></MudTh>*@
+                                <MudTh><MudTableSortLabel SortLabel="MonetaryFlag" T="Client">@L["MonetaryFlag"]</MudTableSortLabel></MudTh>
+                                @*<MudTh><MudTableSortLabel SortLabel="DiscountGuid" T="Client">@L[",DiscountGuid"]</MudTableSortLabel></MudTh>*@
+                                <MudTh><MudTableSortLabel SortLabel="Comment" T="Client">@L["Comment"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="Totalvisits" T="Client">@L["Totalvisits"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="TotalReferrals" T="Client">@L["TotalReferrals"]</MudTableSortLabel></MudTh>
+                                @*  <MudTh><MudTableSortLabel SortLabel="ReferralSourceGuid" T="Client">@L["ReferralSourceGuid"]</MudTableSortLabel></MudTh>
+                                    <MudTh><MudTableSortLabel SortLabel="ClientTypeGuid" T="Client">@L["ClientTypeGuid"]</MudTableSortLabel></MudTh>
+                                    <MudTh><MudTableSortLabel SortLabel="ImageGuid" T="Client">@L["ImageGuid"]</MudTableSortLabel></MudTh>*@
+                                <MudTh><MudTableSortLabel SortLabel="SocialSecurNum" T="Client">@L["SocialSecurNum"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="SpousesocialSecurNum" T="Client">@L["SpousesocialSecurNum"]</MudTableSortLabel></MudTh>
+                                @*<MudTh><MudTableSortLabel SortLabel="PreferredCommMethodGuid" T="Client">@L["PreferredCommMethodGuid"]</MudTableSortLabel></MudTh>*@
+                                <MudTh><MudTableSortLabel SortLabel="FaxNumber" T="Client">@L["FaxNumber"]</MudTableSortLabel></MudTh>
+                                @*<MudTh><MudTableSortLabel SortLabel="DeletedUniqifyingGuid" T="Client">@L["DeletedUniqifyingGuid"]</MudTableSortLabel></MudTh>*@
+                                <MudTh><MudTableSortLabel SortLabel="TaxExempt" T="Client">@L["TaxExempt"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="DriverLicense" T="Client">@L["DriverLicense"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="SpouseDriverLicense" T="Client">@L["SpouseDriverLicense"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="PreviousAccountId" T="Client">@L["PreviousAccountId"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="YtdTotalSales" T="Client">@L["YtdTotalSales"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="YtdTotalReferrals" T="Client">@L["YtdTotalReferrals"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortLabel="YtdTotalVisits" T="Client">@L["YtdTotalVisits"]</MudTableSortLabel></MudTh>
+                            </HeaderContent>
+                            <RowTemplate Context="row">
+                                <MudTd DataLabel="PracticevId">  @row.PracticevId</MudTd>
+                                <MudTd DataLabel="ClientAccountId"> @row.ClientAccountId</MudTd>
+                                <MudTd DataLabel="FirstName"> @row.FirstName</MudTd>
+                                <MudTd DataLabel="LastName"> @row.LastName</MudTd>
+                                <MudTd DataLabel="SpouseFirstName"> @row.SpouseFirstName</MudTd>
+                                <MudTd DataLabel="SpouseLastName"> @row.SpouseLastName</MudTd>
+                                <MudTd DataLabel="StreetAddress1"> @row.StreetAddress1</MudTd>
+                                <MudTd DataLabel="StreetAddress2"> @row.StreetAddress2</MudTd>
+                                @*<MudTd DataLabel="CityStateGuid"> @row.CityStateGuid</MudTd>*@
+                                <MudTd DataLabel="ZipCode"> @row.ZipCode</MudTd>
+                                <MudTd DataLabel="HomePhone"> @row.HomePhone</MudTd>
+                                <MudTd DataLabel="WorkPhone"> @row.WorkPhone</MudTd>
+                                <MudTd DataLabel="EmailAddress"> @row.EmailAddress</MudTd>
+                                <MudTd DataLabel="Active"> @row.Active</MudTd>
+                                <MudTd DataLabel="FirstVisit"> @row.FirstVisit</MudTd>
+                                <MudTd DataLabel="LatestVisit"> @row.LatestVisit</MudTd>
+                                <MudTd DataLabel="TotalSales"> @row.TotalSales</MudTd>
+                                <MudTd DataLabel="Deleted"> @row.Deleted</MudTd>
+                                <MudTd DataLabel="Salutation"> @row.Salutation</MudTd>
+                                <MudTd DataLabel="CreateDateTime"> @row.CreateDateTime</MudTd>
+                                @*<MudTd DataLabel="CreateUserGuid"> @row.CreateUserGuid</MudTd>*@
+                                @*<MudTd DataLabel="CreateWorkstationGuid"> @row.CreateWorkstationGuid</MudTd>*@
+                                <MudTd DataLabel="MonetaryFlag"> @row.MonetaryFlag</MudTd>
+                                @*<MudTd DataLabel="DiscountGuid"> @row.DiscountGuid</MudTd>*@
+                                <MudTd DataLabel="Comment"> @row.Comment</MudTd>
+                                <MudTd DataLabel="Totalvisits"> @row.Totalvisits</MudTd>
+                                <MudTd DataLabel="TotalReferrals"> @row.TotalReferrals</MudTd>
+                                @*  <MudTd DataLabel="ReferralSourceGuid"> @row.ReferralSourceGuid</MudTd>
+                                    <MudTd DataLabel="ClientTypeGuid"> @row.ClientTypeGuid</MudTd>
+                                    <MudTd DataLabel="ImageGuid"> @row.ImageGuid</MudTd>*@
+                                <MudTd DataLabel="SocialSecurNum"> @row.SocialSecurNum</MudTd>
+                                <MudTd DataLabel="SpousesocialSecurNum"> @row.SpousesocialSecurNum</MudTd>
+                                @*<MudTd DataLabel="PreferredCommMethodGuid"> @row.PreferredCommMethodGuid</MudTd>*@
+                                <MudTd DataLabel="FaxNumber"> @row.FaxNumber</MudTd>
+                                @*<MudTd DataLabel="DeletedUniqifyingGuid"> @row.DeletedUniqifyingGuid</MudTd>*@
+                                <MudTd DataLabel="TaxExempt"> @row.TaxExempt</MudTd>
+                                <MudTd DataLabel="DriverLicense"> @row.DriverLicense</MudTd>
+                                <MudTd DataLabel="SpouseDriverLicense"> @row.SpouseDriverLicense</MudTd>
+                                <MudTd DataLabel="PreviousAccountId"> @row.PreviousAccountId</MudTd>
+                                <MudTd DataLabel="YtdTotalSales"> @row.YtdTotalSales</MudTd>
+                                <MudTd DataLabel="YtdTotalReferrals"> @row.YtdTotalReferrals</MudTd>
+                                <MudTd DataLabel="YtdTotalVisits"> @row.YtdTotalVisits</MudTd>
+                            </RowTemplate>
+                            <PagerContent>
+                                <MudTablePager RowsPerPageString=@L["Rows per page"] />
+                            </PagerContent>
+                        </MudTable>
+                    </div>
+                </div>
+            </div>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="6" sm="6">
+        <MudPaper Elevation="25" Class="pa-4">
+            <MudCard>
+                <MudForm Model="@model" @ref="@form">
+                    <MudCardContent>
+                        <MudTextField @bind-Value="model.FirstName" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Name)" Immediate="true" Label="First Name" />
+                        <MudTextField @bind-Value="model.LastName" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Name)" Immediate="true" Label="Last Name" />
+                        <MudTextField @bind-Value="model.MiddleName" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Name)" Immediate="true" Label="Middle" />
+                        <MudTextField @bind-Value="model.Email" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Email)" Immediate="true" Label="Email" />
+                        <MudTextField @bind-Value="model.CCNumber" Validation="@(orderValidator.ValidateValue)"  For="@(() => model.CCNumber)" Immediate="true" Label="Credit card nr" />
+                        <MudTextField @bind-Value="model.Address.Address" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Address.Address)" Immediate="true" Label="Address" />
+                        <MudTextField @bind-Value="model.Address.City" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Address.City)" Immediate="true" Label="City" />
+                        <MudTextField @bind-Value="model.Address.Country" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Address.Country)" Immediate="true" Label="Country" />
+                    </MudCardContent>
+                    <MudCardContent Class="pa-0">
+                        <MudTable Items="@model.OrderDetails" Hover="true" Breakpoint="Breakpoint.None" Dense="@true" Elevation="0">
+                            <HeaderContent>
+                                <MudTh>Description</MudTh>
+                                <MudTh>Offer</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Description">
+                                    <MudForm Model="@context">
+                                        <MudTextField Label="Enter Description" @bind-Value="context.Description" For="(() => context.Description)" Validation=@(orderDetailsValidator.ValidateValue) />
+                                    </MudForm>
+                                </MudTd>
+                                <MudTd DataLabel="Offer">
+                                    <MudForm Model="@context">
+                                        <MudNumericField Label="Enter Offer" @bind-Value="context.Offer" For="(() => context.Offer)" Validation=@(orderDetailsValidator.ValidateValue) />
+                                    </MudForm>
+                                </MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    </MudCardContent>
+                </MudForm>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Order</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="6" sm="6">
+        <MudPaper Elevation="25" Class="pa-4">
+            <MudCard>
+                <MudForm Model="@model" @ref="@form">
+                    <MudCardContent>
+                        <MudTextField @bind-Value="model.Name" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Name)" Immediate="true" Label="Name" />
+                        <MudTextField @bind-Value="model.Email" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Email)" Immediate="true" Label="Email" />
+                        <MudTextField @bind-Value="model.CCNumber" Validation="@(orderValidator.ValidateValue)" For="@(() => model.CCNumber)" Immediate="true" Label="Credit card nr" />
+                        <MudTextField @bind-Value="model.Address.Address" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Address.Address)" Immediate="true" Label="Address" />
+                        <MudTextField @bind-Value="model.Address.City" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Address.City)" Immediate="true" Label="City" />
+                        <MudTextField @bind-Value="model.Address.Country" Validation="@(orderValidator.ValidateValue)" For="@(() => model.Address.Country)" Immediate="true" Label="Country" />
+                    </MudCardContent>
+                    <MudCardContent Class="pa-0">
+                        <MudTable Items="@model.OrderDetails" Hover="true" Breakpoint="Breakpoint.None" Dense="@true" Elevation="0">
+                            <HeaderContent>
+                                <MudTh>Description</MudTh>
+                                <MudTh>Offer</MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Description">
+                                    <MudForm Model="@context">
+                                        <MudTextField Label="Enter Description" @bind-Value="context.Description" For="(() => context.Description)" Validation=@(orderDetailsValidator.ValidateValue) />
+                                    </MudForm>
+                                </MudTd>
+                                <MudTd DataLabel="Offer">
+                                    <MudForm Model="@context">
+                                        <MudNumericField Label="Enter Offer" @bind-Value="context.Offer" For="(() => context.Offer)" Validation=@(orderDetailsValidator.ValidateValue) />
+                                    </MudForm>
+                                </MudTd>
+                            </RowTemplate>
+                        </MudTable>
+                    </MudCardContent>
+                </MudForm>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Class="ml-auto" OnClick="@(async () => await Submit())">Order</MudButton>
+                </MudCardActions>
+            </MudCard>
+        </MudPaper>
+    </MudItem>
+    <MudItem xs="6" sm="6" md="6">
+        <MudCard Elevation="25" Style="height:100%;">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Earning Report</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent Class="px-0">
+                <MudSimpleTable Elevation="0" Hover="true">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Priority</th>
+                            <th>Earnings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var report in earningReports.OrderBy(x => x.Name))
+                        {
+                            <tr>
+                                <td>
+                                    <div class="d-flex flex-row">
+                                        <MudAvatar Image="@report.Avatar" Class="mud-elevation-25" />
+                                        <div class="ml-6">
+                                            <MudText Typo="Typo.subtitle2">@report.Name</MudText>
+                                            <MudText Typo="Typo.body2">@report.Title</MudText>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><MudChip Text="true" Color="@report.Severity" Size="Size.Small" Class="ml-auto mud-elevation-25">@report.SeverityTitle</MudChip></td>
+                                <td><MudText>@report.Salary</MudText></td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+    <MudItem xs="12" sm="12" md="6">
+        <MudCard Elevation="25" Style="height:100%;">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">Recent incidents</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent Class="px-0">
+                <MudList Clickable="true">
+                    <MudListItem>
+                        <div class="d-flex flex-row">
+                            <MudAvatar Class="mud-elevation-25">
+                                <MudIcon Icon="@Icons.Custom.Brands.GitHub" Class="mx-4" />
+                            </MudAvatar>
+                            <div class="ml-6">
+                                <MudText Typo="Typo.subtitle2">Issues rising</MudText>
+                                <MudText Typo="Typo.body2">Issues is almost reaching 100</MudText>
+                            </div>
+                            <MudChip Text="true" Color="Color.Error" Size="Size.Small" Class="ml-auto mud-elevation-25">Danger</MudChip>
+                        </div>
+                    </MudListItem>
+                    <MudListItem>
+                        <div class="d-flex flex-row">
+                            <MudAvatar Class="mud-elevation-25">
+                                <MudIcon Icon="@Icons.Custom.Uncategorized.Radioactive" Class="mx-4" />
+                            </MudAvatar>
+                            <div class="ml-6">
+                                <MudText Typo="Typo.subtitle2">Incident in plant number 4</MudText>
+                                <MudText Typo="Typo.body2">Fire in reactor core</MudText>
+                            </div>
+                            <MudChip Text="true" Color="Color.Info" Size="Size.Small" Class="ml-auto mud-elevation-25">Minor</MudChip>
+                        </div>
+                    </MudListItem>
+                    <MudListItem>
+                        <div class="d-flex flex-row">
+                            <MudAvatar Class="mud-elevation-25">
+                                <MudIcon Icon="@Icons.Material.Filled.Person" Class="mx-4" />
+                            </MudAvatar>
+                            <div class="ml-6">
+                                <MudText Typo="Typo.subtitle2">Occupational injury</MudText>
+                                <MudText Typo="Typo.body2">Employee broke a finger while writing some code</MudText>
+                            </div>
+                            <MudChip Text="true" Color="Color.Success" Size="Size.Small" Class="ml-auto mud-elevation-25">Dismissed</MudChip>
+                        </div>
+                    </MudListItem>
+                </MudList>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+
+
+@code {
+
+    [Inject] ISnackbar Snackbar { get; set; }
+
+    MudForm form;
+
+    OrderModelFluentValidator orderValidator = new OrderModelFluentValidator();
+
+    OrderDetailsModelFluentValidator orderDetailsValidator = new OrderDetailsModelFluentValidator();
+
+    OrderModel model = new OrderModel();
+
+    public class OrderModel
+    {
+        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string MiddleName { get; set; }
+        public string Email { get; set; }
+        public string CCNumber { get; set; } = "4012 8888 8888 1881";
+        public AddressModel Address { get; set; } = new AddressModel();
+        public List<OrderDetailsModel> OrderDetails = new List<OrderDetailsModel>()
+        {
+            new OrderDetailsModel()
+                {
+                    Description = "Perform Work order 1",
+                    Offer = 100
+                },
+            new OrderDetailsModel()
+        };
+    }
+
+    public class AddressModel
+    {
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+    }
+
+    public class OrderDetailsModel
+    {
+        public string Description { get; set; }
+        public decimal Offer { get; set; }
+    }
+
+    private async Task Submit()
+    {
+        await form.Validate();
+
+        if (form.IsValid)
+        {
+            Snackbar.Add("Submited!");
+        }
+    }
+
+    /// <summary>
+    /// A standard AbstractValidator which contains multiple rules and can be shared with the back end API
+    /// </summary>
+    /// <typeparam name="OrderModel"></typeparam>
+    public class OrderModelFluentValidator : AbstractValidator<OrderModel>
+    {
+        public OrderModelFluentValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty().Length(1, 100);
+            RuleFor(x => x.FirstName).NotEmpty().Length(1, 100);
+            RuleFor(x => x.LastName).NotEmpty().Length(1, 100);
+            RuleFor(x => x.MiddleName).NotEmpty().Length(1, 100);
+
+            RuleFor(x => x.Email)
+                .Cascade(CascadeMode.Stop)
+                .NotEmpty()
+                .EmailAddress()
+                .MustAsync(async (value, cancellationToken) => await IsUniqueAsync(value));
+
+            RuleFor(x => x.CCNumber)
+                .NotEmpty()
+                .Length(1, 100)
+                .CreditCard();
+
+            RuleFor(x => x.Address.Address)
+                .NotEmpty()
+                .Length(1, 100);
+
+            RuleFor(x => x.Address.City)
+                .NotEmpty()
+                .Length(1, 100);
+
+            RuleFor(x => x.Address.Country)
+                .NotEmpty()
+                .Length(1, 100);
+
+            RuleForEach(x => x.OrderDetails)
+                .SetValidator(new OrderDetailsModelFluentValidator());
+        }
+
+        private async Task<bool> IsUniqueAsync(string email)
+        {
+            // Simulates a long running http call
+            await Task.Delay(2000);
+            return email.ToLower() != "test@test.com";
+        }
+
+        public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
+        {
+            var result = await ValidateAsync(ValidationContext<OrderModel>.CreateWithOptions((OrderModel)model, x => x.IncludeProperties(propertyName)));
+            if (result.IsValid)
+                return Array.Empty<string>();
+            return result.Errors.Select(e => e.ErrorMessage);
+        };
+    }
+
+    /// <summary>
+    /// A standard AbstractValidator for the Collection Object
+    /// </summary>
+    /// <typeparam name="OrderDetailsModel"></typeparam>
+    public class OrderDetailsModelFluentValidator : AbstractValidator<OrderDetailsModel>
+    {
+        public OrderDetailsModelFluentValidator()
+        {
+            RuleFor(x => x.Description)
+                .NotEmpty()
+                .Length(1, 100);
+
+            RuleFor(x => x.Offer)
+                .GreaterThan(0)
+                .LessThan(999);
+        }
+
+        public Func<object, string, Task<IEnumerable<string>>> ValidateValue => async (model, propertyName) =>
+        {
+            var result = await ValidateAsync(ValidationContext<OrderDetailsModel>.CreateWithOptions((OrderDetailsModel)model, x => x.IncludeProperties(propertyName)));
+            if (result.IsValid)
+                return Array.Empty<string>();
+            return result.Errors.Select(e => e.ErrorMessage);
+        };
+    }
+
+    EarningReport[] earningReports = new EarningReport[]
+        {
+        new EarningReport { Name = "Lunees", Title = "Reactor Engineer", Avatar = "https://avatars2.githubusercontent.com/u/71094850?s=460&u=66c16f5bb7d27dc751f6759a82a3a070c8c7fe4b&v=4", Salary = "$0.99", Severity = Color.Success, SeverityTitle = "Low"},
+        new EarningReport { Name = "Mikes-gh", Title = "Developer", Avatar = "https://avatars.githubusercontent.com/u/16208742?s=120&v=4", Salary = "$19.12K", Severity = Color.Secondary, SeverityTitle = "Medium"},
+        new EarningReport { Name = "Garderoben", Title = "CSS Magician", Avatar = "https://avatars2.githubusercontent.com/u/10367109?s=460&amp;u=2abf95f9e01132e8e2915def42895ffe99c5d2c6&amp;v=4", Salary = "$1337", Severity = Color.Primary, SeverityTitle = "High"},
+        };
+
+    class EarningReport
+    {
+        public string Avatar;
+        public string Name;
+        public string Title;
+        public Color Severity;
+        public string SeverityTitle;
+        public string Salary;
+    }
+
+
+    int _currentCount = 0;
+    int _profileCurrentCount = -1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _profileCurrentCount = await appState.GetUserProfileCount();
+    }
+
+    public async Task IncrementCount()
+    {
+        _currentCount++;
+        _profileCurrentCount++;
+        await appState.UpdateUserProfileCount(_profileCurrentCount);
+    }
+
+    protected async void Update(Todo todo)
+    {
+        try
+        {
+            todo.IsCompleted = !todo.IsCompleted;
+
+            await apiClient.SaveChanges();
+
+            viewNotifier.Show($"{todo.Title} updated", ViewNotifierType.Success, L["Operation Successful"]);
+        }
+        catch (Exception ex)
+        {
+            viewNotifier.Show(ex.GetBaseException().Message, ViewNotifierType.Error, L["Operation Failed"]);
+        }
+    }
+
+}

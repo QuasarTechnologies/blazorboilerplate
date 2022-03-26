@@ -27,25 +27,21 @@
     <ProjectReference Include="..\BlazorBoilerplate.Shared.Localizer\BlazorBoilerplate.Shared.Localizer.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Dto\Admin\ResourceDtoCustomUserClaims.tt">
-      <LastGenOutput>IdentityServerDtos.txt</LastGenOutput>
-      <Generator>TextTemplatingFileGenerator</Generator>
-    </None>
-    <None Update="Dto\Admin\IdentityServerDtos.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>IdentityServerDtos.txt</LastGenOutput>
-    </None>
-    <None Update="Dto\Admin\IdentityServerDtos.txt">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>IdentityServerDtos.tt</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="EntityGeneratorConfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Interfaces\Admin\IdentityServerDtos.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IdentityServerDtos.txt</LastGenOutput>
+    </None>
+    <None Update="Interfaces\Admin\ResourceDtoCustomUserClaims.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IdentityServerDtos.txt</LastGenOutput>
+    </None>
   </ItemGroup>
 </Project>

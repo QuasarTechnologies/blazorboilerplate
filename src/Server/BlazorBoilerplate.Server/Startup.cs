@@ -192,9 +192,7 @@ namespace BlazorBoilerplate.Server
                             // The Azure Storage Container (blazor-boilerplate-keys) Access Control must grant blazor-boilerplate the following roles:
                             // - Storage Blob Data Contributor
 
-                            var blobServiceClient = new BlobServiceClient(
-                                new Uri(Configuration["HostingOnAzure:AzureKeyVault:StorageAccountBlobBaseUrl"]),
-                                tokenCredential);
+                            var blobServiceClient = new BlobServiceClient(new Uri(Configuration["HostingOnAzure:AzureKeyVault:StorageAccountBlobBaseUrl"]), tokenCredential);
 
                             BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(Configuration["HostingOnAzure:AzureKeyVault:ContainerName"]);
                             BlobClient blobClient = blobContainerClient.GetBlobClient(Configuration["HostingOnAzure:AzureKeyVault:KeysBlobName"]);
@@ -465,7 +463,7 @@ namespace BlazorBoilerplate.Server
             //services.ConfigureExternalCookie(options =>
             // {
             // macOS login fix
-            //options.Cookie.SameSite = SameSiteMode.None;
+            // options.Cookie.SameSite = SameSiteMode.None;
             //});
 
             services.ConfigureApplicationCookie(options =>
@@ -537,6 +535,14 @@ namespace BlazorBoilerplate.Server
                 o.MaximumReceiveMessageSize = 131072;
             });
 
+           // services.AddCors(options =>
+           // {
+           //     options.AddPolicy("NewPolicy", builder =>
+           //         builder.AllowAnyOrigin()
+           //             .AllowAnyMethod()
+           //             .AllowAnyHeader());
+           // });
+            
             services.AddSignalR();
             services.AddSingleton<IUserIdProvider, UserIdProvider>();
 
@@ -680,6 +686,8 @@ namespace BlazorBoilerplate.Server
 
             app.UseRouting();
 
+          //  app.UseCors("NewPolicy");
+            
             app.UseIdentityServer();
             //app.UseAuthentication();
             app.UseAuthorization();

@@ -31,7 +31,7 @@ services:
     volumes:
       - dbdata:/var/opt/mssql
     environment:
-      - SA_PASSWORD=yourVeryStrong(!)Password
+      - SA_PASSWORD=MyCujo65
       - ACCEPT_EULA=Y
     ports:
       - 1533:1433 #expose port, so can connect to it using host: 'localhost,1533' | user: sa, password: yourVeryStrong(!)Password

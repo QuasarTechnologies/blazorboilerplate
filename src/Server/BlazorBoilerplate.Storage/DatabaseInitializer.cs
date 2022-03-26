@@ -62,13 +62,9 @@ namespace BlazorBoilerplate.Storage
         {
             //Apply EF Core migration
             await MigrateAsync();
-
             await ImportTranslations();
-
             await EnsureAdminIdentitiesAsync();
-
             await SeedIdentityServerAsync();
-
             //Seed blazorboilerplate sample data
             await SeedDemoDataAsync();
         }
@@ -132,7 +128,7 @@ namespace BlazorBoilerplate.Storage
 
                 var users = _context.Users.ToArray();
 
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 10; i++)
                     _context.Todos.Add(
                             new Todo
                             {

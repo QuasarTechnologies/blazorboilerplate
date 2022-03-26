@@ -121,51 +121,51 @@ namespace BlazorBoilerplate.Api.SubModels
         [Required]
         [Column("SPECIAL_INSTRUCTIONS", TypeName = "text")]
         public string SpecialInstructions { get; set; }
-        [Required]
-        [Column("{0EECC2EA-205E-4F56-90D5-E4101EEF8430}")]
-        [StringLength(8)]
-        [Unicode(false)]
-        public string _0eecc2ea205e4f5690d5E4101eef8430 { get; set; }
-        [Required]
-        [Column("{B995CD4D-3D01-4CAA-B148-5DF48EA3192B}")]
-        [StringLength(8)]
-        [Unicode(false)]
-        public string B995cd4d3d014caaB1485df48ea3192b { get; set; }
-        [Required]
-        [Column("{9C0A21A9-9C84-4F2A-A9C0-85725E8DDF3A}")]
-        [StringLength(3)]
-        [Unicode(false)]
-        public string _9c0a21a99c844f2aA9c085725e8ddf3a { get; set; }
-        [Required]
-        [Column("{6EAECDCB-57E5-41ED-B471-B6C2808A08A3}")]
-        [StringLength(40)]
-        [Unicode(false)]
-        public string _6eaecdcb57e541edB471B6c2808a08a3 { get; set; }
-        [Required]
-        [Column("{93447AF8-106D-4B6B-ACC9-9FEFC639D1C4}")]
-        [StringLength(40)]
-        [Unicode(false)]
-        public string _93447af8106d4b6bAcc99fefc639d1c4 { get; set; }
-        [Column("{A7E9D7BE-0561-4F83-9FB3-BD5C9CE84A7F}", TypeName = "datetime")]
-        public DateTime? A7e9d7be05614f839fb3Bd5c9ce84a7f { get; set; }
-        [Column("{0C3D2847-69DA-4F19-9B42-5B561A4C1215}", TypeName = "datetime")]
-        public DateTime? _0c3d284769da4f199b425b561a4c1215 { get; set; }
-        [Column("{50D8FFC6-08F0-4FA4-9B3B-215899CFBCDD}", TypeName = "datetime")]
-        public DateTime? _50d8ffc608f04fa49b3b215899cfbcdd { get; set; }
-        [Required]
-        [Column("{98331712-876E-46D2-B736-DD1B220933C4}")]
-        [StringLength(40)]
-        [Unicode(false)]
-        public string _98331712876e46d2B736Dd1b220933c4 { get; set; }
-        [Column("{B799189A-40CC-42EC-88F2-293A98588E33}", TypeName = "datetime")]
-        public DateTime? B799189a40cc42ec88f2293a98588e33 { get; set; }
-        [Required]
-        [Column("{BB7CD819-68F8-4842-A983-CE0EC7E352F3}")]
-        [StringLength(15)]
-        [Unicode(false)]
-        public string Bb7cd81968f84842A983Ce0ec7e352f3 { get; set; }
-        [Column("{06997518-1139-4599-B4DC-5C3953639D47}", TypeName = "datetime")]
-        public DateTime? _0699751811394599B4dc5c3953639d47 { get; set; }
+        // [Required]
+        // [Column("{0EECC2EA-205E-4F56-90D5-E4101EEF8430}")]
+        // [StringLength(8)]
+        // [Unicode(false)]
+        // public string _0eecc2ea205e4f5690d5E4101eef8430 { get; set; }
+        // [Required]
+        // [Column("{B995CD4D-3D01-4CAA-B148-5DF48EA3192B}")]
+        // [StringLength(8)]
+        // [Unicode(false)]
+        // public string B995cd4d3d014caaB1485df48ea3192b { get; set; }
+        // [Required]
+        // [Column("{9C0A21A9-9C84-4F2A-A9C0-85725E8DDF3A}")]
+        // [StringLength(3)]
+        // [Unicode(false)]
+        // public string _9c0a21a99c844f2aA9c085725e8ddf3a { get; set; }
+        // [Required]
+        // [Column("{6EAECDCB-57E5-41ED-B471-B6C2808A08A3}")]
+        // [StringLength(40)]
+        // [Unicode(false)]
+        // public string _6eaecdcb57e541edB471B6c2808a08a3 { get; set; }
+        // [Required]
+        // [Column("{93447AF8-106D-4B6B-ACC9-9FEFC639D1C4}")]
+        // [StringLength(40)]
+        // [Unicode(false)]
+        // public string _93447af8106d4b6bAcc99fefc639d1c4 { get; set; }
+        // [Column("{A7E9D7BE-0561-4F83-9FB3-BD5C9CE84A7F}", TypeName = "datetime")]
+        // public DateTime? A7e9d7be05614f839fb3Bd5c9ce84a7f { get; set; }
+        // [Column("{0C3D2847-69DA-4F19-9B42-5B561A4C1215}", TypeName = "datetime")]
+        // public DateTime? _0c3d284769da4f199b425b561a4c1215 { get; set; }
+        // [Column("{50D8FFC6-08F0-4FA4-9B3B-215899CFBCDD}", TypeName = "datetime")]
+        // public DateTime? _50d8ffc608f04fa49b3b215899cfbcdd { get; set; }
+        // [Required]
+        // [Column("{98331712-876E-46D2-B736-DD1B220933C4}")]
+        // [StringLength(40)]
+        // [Unicode(false)]
+        // public string _98331712876e46d2B736Dd1b220933c4 { get; set; }
+        // [Column("{B799189A-40CC-42EC-88F2-293A98588E33}", TypeName = "datetime")]
+        // public DateTime? B799189a40cc42ec88f2293a98588e33 { get; set; }
+        // [Required]
+        // [Column("{BB7CD819-68F8-4842-A983-CE0EC7E352F3}")]
+        // [StringLength(15)]
+        // [Unicode(false)]
+        // public string Bb7cd81968f84842A983Ce0ec7e352f3 { get; set; }
+        // [Column("{06997518-1139-4599-B4DC-5C3953639D47}", TypeName = "datetime")]
+        // public DateTime? _0699751811394599B4dc5c3953639d47 { get; set; }
         [Column("HEALTH_PLAN_GUID")]
         public Guid HealthPlanGuid { get; set; }
         [Required]

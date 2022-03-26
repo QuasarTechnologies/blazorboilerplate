@@ -157,55 +157,5 @@ namespace BlazorBoilerplate.Api.SubModels
         public int YtdTotalReferrals { get; set; }
         [Column("YTD_TOTAL_VISITS")]
         public int YtdTotalVisits { get; set; }
-        [Required]
-        [Column("{B6736C95-B51D-40C0-BE34-BC91937DD4BD}")]
-        [StringLength(45)]
-        [Unicode(false)]
-        public string B6736c95B51d40c0Be34Bc91937dd4bd { get; set; }
-        [Required]
-        [Column("{43E0CECD-B335-48B7-BFF9-79B7EB2744F6}")]
-        [StringLength(20)]
-        [Unicode(false)]
-        public string _43e0cecdB33548b7Bff979b7eb2744f6 { get; set; }
-        [Required]
-        [Column("{AE77AEEF-2A77-4E4A-8703-29E8C86AE93E}")]
-        [StringLength(20)]
-        [Unicode(false)]
-        public string Ae77aeef2a774e4a870329e8c86ae93e { get; set; }
-        [Required]
-        [Column("{77F98413-1234-453D-B363-C34DC01DD92E}")]
-        [StringLength(20)]
-        [Unicode(false)]
-        public string _77f984131234453dB363C34dc01dd92e { get; set; }
-        [Required]
-        [Column("{E6EC29AE-DEE8-40E9-BF58-606C3872C641}")]
-        [StringLength(20)]
-        [Unicode(false)]
-        public string E6ec29aeDee840e9Bf58606c3872c641 { get; set; }
-        [Required]
-        [Column("{F90FAF4B-229A-49CD-96D2-44E28612FB90}")]
-        [StringLength(30)]
-        [Unicode(false)]
-        public string F90faf4b229a49cd96d244e28612fb90 { get; set; }
-        [Required]
-        [Column("{6879681D-1FC7-4A30-BCB8-FEB8F6F716B0}")]
-        [StringLength(45)]
-        [Unicode(false)]
-        public string _6879681d1fc74a30Bcb8Feb8f6f716b0 { get; set; }
-        [Required]
-        [Column("{5335D36B-A143-4941-B45A-8B136ADC048A}")]
-        [StringLength(5)]
-        [Unicode(false)]
-        public string _5335d36bA1434941B45a8b136adc048a { get; set; }
-        [Required]
-        [Column("{5A2FDDD4-87CD-41DA-AF67-926204EDDB80}")]
-        [StringLength(45)]
-        [Unicode(false)]
-        public string _5a2fddd487cd41daAf67926204eddb80 { get; set; }
-        [Required]
-        [Column("{787098C5-1D5A-4A6E-A2F5-37DB4E064358}")]
-        [StringLength(50)]
-        [Unicode(false)]
-        public string _787098c51d5a4a6eA2f537db4e064358 { get; set; }
     }
 }

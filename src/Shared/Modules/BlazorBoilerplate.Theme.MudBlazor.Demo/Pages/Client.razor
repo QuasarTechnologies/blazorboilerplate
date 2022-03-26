@@ -6,13 +6,10 @@
 @using System
 @using Microsoft.VisualBasic
 <TopSection>
-    <Breadcrumbs>
-        <Breadcrumb Title="Client Admin"/>
-    </Breadcrumbs>
+    <Breadcrumbs><Breadcrumb Title="Client Admin"/></Breadcrumbs>
 </TopSection>
 
-<MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-4" Style="margin-left: 10px;">Clients</MudText>
-<MudTabs Elevation="25" Color="Color.Transparent" Rounded="true" PanelClass="mt-6">
+<MudTabs Elevation="25" Color="Color.Success" Rounded="true" PanelClass="mt-6">
 
 <MudTabPanel Text="Client">
     <MudForm Model="@cc">
@@ -22,133 +19,143 @@
                 <MudCard Elevation="25">
                     <MudCardHeader>
                         <CardHeaderContent>
-                            <MudText>Profile Details</MudText>
+                            <MudText>Clients Details</MudText>
                         </CardHeaderContent>
                     </MudCardHeader>
                     <MudCardContent>
                         <MudGrid>
                             <!-- IsActive -->
-                            <MudItem xs="1" md="1">
+                            <MudItem xs="1" md="2">
                                 <MudTextField @bind-Value="@cc.Active" Label="Is Active" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- Salutation -->
-                            <MudItem xs="1" md="1">
+                            <MudItem xs="1" md="2">
                                 <MudTextField @bind-Value="@cc.Salutation" Label="Salutation" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- LastName -->
-                            <MudItem xs="11" md="3">
+                            <MudItem xs="11" md="2">
                                 <MudTextField @bind-Value="@cc.LastName" Label="Last Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- FirstName -->
-                            <MudItem xs="11" md="3">
+                            <MudItem xs="11" md="2">
                                 <MudTextField @bind-Value="@cc.FirstName" Label="First Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- ssn -->
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.SocialSecurNum" Label="S.S.N" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- Spouse Row 2 -->
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.SpouseLastName" Label="Spouse Last Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.SpouseFirstName" Label="Spouse First Name" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.SpouseSocialSecurNum" Label="Spouse S.S.N" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="12" md="4">
+                            <MudItem xs="12" md="2">
                                 <MudTextField @bind-Value="@cc.StreetAddress1" Label="Street Address 1" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="12" md="4">
+                            <MudItem xs="12" md="2">
                                 <MudTextField @bind-Value="@cc.StreetAddress2" Label="Street Address 2" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- City, State, zip Row 4 -->
-                            <MudItem xs="5" md="4">
+                            <MudItem xs="5" md="2">
                                 <MudTextField @bind-Value="@cc.City" Label="City" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
                             <MudHidden @bind-Value="@cc.CityStateGuid" Label="City" Variant="Variant.Filled"/>
-                            <MudItem xs="2" md="4">
+                            <MudItem xs="2" md="2">
                                 <MudTextField @bind-Value="@cc.State" Label="State" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="5" md="4">
+                            <MudItem xs="5" md="2">
                                 <MudTextField @bind-Value="@cc.Zipcode" Label="Zip" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- Phone Numbers Row 5 -->
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.HomePhone" Label="Primary Phone" Variant="Variant.Filled" InputType="InputType.Telephone" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.WorkPhone" Label="Work/Cell Phone" Variant="Variant.Filled" InputType="InputType.Telephone" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- Email addys Row 6 -->
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.EmailAddress" Label="Email" Variant="Variant.Filled" HelperText="This is a required field." InputType="InputType.Email" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- Client Row 1 -->
-                            <MudItem xs="12" md="4">
-                                <MudTextField @bind-Value="@cc.ReferralSourceGuid" Label="ReferredBy" Variant="Variant.Filled" Margin="Margin.Dense"/>
+                            <MudItem xs="12" md="2">
+                                <MudSelect T="string" Label="Referred By" Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter" Margin="Margin.Dense" >
+                                    <MudSelectItem Value="@("Frank Marino")" style="color: red;"> </MudSelectItem>
+                                    <MudSelectItem Value="@("Roger Waters")"  style="color: green;" />    
+                                    <MudSelectItem Value="@("Tom Petty")"  style="color: blue;"/>    
+                                    <MudSelectItem Value="@("Mick Jagger")" style="color: orange;" />    
+                                    <MudSelectItem Value="@("Ron Smith")"  style="color: pink;"/>    
+                                    <MudSelectItem Value="@("Rod Stewart")" style="color: red;" />    
+                                    <MudSelectItem Value="@("Tom Shultz")" style="color: yellow;" />    
+                                </MudSelect>
                             </MudItem>
 
 
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.DriverLicense" Label="Driver Lic." Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
 
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.SpouseDriverLicense" Label="Spouse Driver Lic." Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-
+                            <MudItem xs="6" md="2">
                             <!-- Address 1 Row 3 -->
-
-
-                            <MudItem xs="6" md="4">
-                                <MudTextField @bind-Value="@cc.PreferredCommMethodGuid" Label="Preferred Communication" Variant="Variant.Filled" HelperText="This is a required field." InputType="InputType.Email" Margin="Margin.Dense"/>
+                            <MudSelect T="string" Label="Preferred Comm Method" Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter" Margin="Margin.Dense" >
+                                <MudSelectItem Value="@("None")" />    
+                                <MudSelectItem Value="@("Home Phone")" />
+                                <MudSelectItem Value="@("Work Phone")" />                 
+                                <MudSelectItem Value="@("Cell Phone")" />
+                                <MudSelectItem Value="@("Email")" />
+                                <MudSelectItem Value="@("WhatsApp")" />
+                                <MudSelectItem Value="@("Facebook")" />
+                                <MudSelectItem Value="@("Other")" />
+                            </MudSelect>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.TaxExempt" Label="Tax Exempt" Variant="Variant.Filled" HelperText="This is a required field." InputType="InputType.Email" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudSwitch @bind-Checked="@AdminSwitch" Color="Color.Secondary" Label="Is New Client"/>
                             </MudItem>
                             <!-- First Visit Anniversary 2 -->
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.FirstVisit" Label="First Visit" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.FirstName" Label="Employee on First Visit" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.TotalSales" Label="Total Sales" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.YtdTotalSales" Label="YTD Sales" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.YtdTotalReferrals" Label="YTD Referrals" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.YtdTotalVisits" Label="YTD  Visits" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
                             <!-- Row Anniversary 2 -->
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField T="string" Value="@("Dec 12, 2022")" Label="Last Date Visited" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudTextField @bind-Value="@cc.TotalVisits" Label="Total Visits" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudText @bind-Value="@cc.Comment" Label="Comments" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="6" md="4">
+                            <MudItem xs="6" md="2">
                                 <MudText @bind-Value="@cc.TotalReferrals" Label="Total Referrals" Variant="Variant.Filled" Margin="Margin.Dense"/>
                             </MudItem>
-                            <MudItem xs="12" md="4">
-                                <MudSelect T="LastEmployee" Label="Last Employee"
-                                           Variant="Variant.Filled"
-                                           AnchorOrigin="Origin.BottomCenter"
-                                           Margin="Margin.Dense"
-                                           OnInternalInputChanged="() => { date = _startDate; }">
+                            <MudItem xs="12" md="2">
+                                <MudSelect T="LastEmployee" Label="Last Employee" Variant="Variant.Filled" AnchorOrigin="Origin.BottomCenter" Margin="Margin.Dense" OnInternalInputChanged="() => { date = _startDate; }">
                                     <MudSelectItem Value="@(new LastEmployee("Josie", "Cat"))"/>
                                     <MudSelectItem Value="@(new LastEmployee("Joe", "Mama"))"/>
                                     <MudSelectItem Value="@(new LastEmployee("Adam", "Ant"))"/>
@@ -388,6 +395,7 @@
         <MudForm Model="cp1">
             <MudGrid>
                 <MudItem xs="12" sm="12" md="12">
+                    
                     <MudCard Elevation="25">
                         <MudCardHeader>
                             <CardHeaderContent>
@@ -1013,7 +1021,7 @@
     private Mdl.Pet cp2 { get; set; } = new Mdl.Pet();
     private Mdl.Pet cp3 { get; set; } = new Mdl.Pet();
     private List<Mdl.Client> customers = new List<Mdl.Client>();
-
+   
     private List<Mdl.Pet> cps { get; set; } = new List<Mdl.Pet>
     {
         new Pet() { PatientGuid = new Guid(), ClientGuid = new Guid(), SpeciesGuid = new Guid(), BreedGuid = new Guid(), ColorGuid = new Guid(), PatientAccountGuid = "A", PatientName = "Oscar", StableGuid = new Guid(), Sex = "Male", BirthDate = DateTime.Now, Active = true, LatestVisit = DateTime.Now, PracticeVid = "65", Deleted = false, CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), DeceasedDate = DateTime.Now, FirstVisit = DateTime.Now, MaturityCode = "A", MedicalAlert = "", ChronicAilment = "", ContinuousMedication = "", Comment = "", Weight = 3347.49d, DoctorPreferenceGuid = new Guid(), ImageGuid = new Guid(), TattooNum = "", AvidChipNum = "", RefferalSourceGuid = new Guid(), RabiesTagNum = "365143", RabiesSerialNum = "", RabioesBrandName = "Imrab", DeletedUniqifyingGuid = new Guid(), Specialinstructions = "", HealthPlanGuid = new Guid(), TrainerGuid = new Guid() },
@@ -1024,12 +1032,15 @@
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
+    
         customers = new List<Mdl.Client>
         {
-            new Mdl.Client() { ClientGuid = new Guid(), PracticeVid = "1", ClientAccountId = "1", FirstName = "Joe", LastName = "Smith", SpouseFirstName = "val", SpouseLastName = "val", StreetAddress1 = "val", StreetAddress2 = "val", CityStateGuid = new Guid(), City = "Fort Lauderdale", State = "Fl", Zipcode = "32333", HomePhone = "(954) 654-5455", WorkPhone = "(305) 564-6545", EmailAddress = "email@somewhere.com", Active = true, FirstVisit = DateTime.Now, LatestVisit = DateTime.Now, TotalSales = 1251.58m, Deleted = false, Salutation = "Mr.", CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), MonetaryFlag = "$", DiscountGuid = new Guid(), Comment = "val", TotalVisits = 22, ReferralSourceGuid = new Guid(), TotalReferrals = 2, ClientTypeGuid = new Guid(), ImageGuid = new Guid(), SocialSecurNum = "321-54-9878", SpouseSocialSecurNum = "456-54-9633", PreferredCommMethodGuid = new Guid(), FaxNumber = "(356) 852-5464", DeletedUniqifyingGuid = new Guid(), TaxExempt = false, DriverLicense = "BR549", SpouseDriverLicense = "BR974", PreviousAccountId = "val", YtdTotalSales = 123.83m, YtdTotalReferrals = 2, YtdTotalVisits = 5 },
-            new Mdl.Client() { ClientGuid = new Guid(), PracticeVid = "1", ClientAccountId = "2", FirstName = "Gail", LastName = "Whoknows", SpouseFirstName = "val", SpouseLastName = "val", StreetAddress1 = "val", StreetAddress2 = "val", CityStateGuid = new Guid(), City = "Fort Lauderdale", State = "Fl", Zipcode = "33453", HomePhone = "(954) 654-5455", WorkPhone = "(305) 564-6545", EmailAddress = "email@somewhere.com", Active = true, FirstVisit = DateTime.Now, LatestVisit = DateTime.Now, TotalSales = 3281.58m, Deleted = false, Salutation = "Mrs.", CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), MonetaryFlag = "$", DiscountGuid = new Guid(), Comment = "val", TotalVisits = 22, ReferralSourceGuid = new Guid(), TotalReferrals = 2, ClientTypeGuid = new Guid(), ImageGuid = new Guid(), SocialSecurNum = "321-54-9878", SpouseSocialSecurNum = "456-54-9633", PreferredCommMethodGuid = new Guid(), FaxNumber = "(356) 852-5464", DeletedUniqifyingGuid = new Guid(), TaxExempt = false, DriverLicense = "BR345", SpouseDriverLicense = "BR756", PreviousAccountId = "val", YtdTotalSales = 352.83m, YtdTotalReferrals = 5, YtdTotalVisits = 5 },
-            new Mdl.Client() { ClientGuid = new Guid(), PracticeVid = "1", ClientAccountId = "3", FirstName = "Sam", LastName = "IdontCare", SpouseFirstName = "val", SpouseLastName = "val", StreetAddress1 = "val", StreetAddress2 = "val", CityStateGuid = new Guid(), City = "Fort Lauderdale", State = "Fl", Zipcode = "33386", HomePhone = "(954) 654-5455", WorkPhone = "(305) 564-6545", EmailAddress = "email@somewhere.com", Active = true, FirstVisit = DateTime.Now, LatestVisit = DateTime.Now, TotalSales = 4271.58m, Deleted = false, Salutation = "Ms.", CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), MonetaryFlag = "$", DiscountGuid = new Guid(), Comment = "val", TotalVisits = 22, ReferralSourceGuid = new Guid(), TotalReferrals = 2, ClientTypeGuid = new Guid(), ImageGuid = new Guid(), SocialSecurNum = "321-54-9878", SpouseSocialSecurNum = "456-54-9633", PreferredCommMethodGuid = new Guid(), FaxNumber = "(356) 852-5464", DeletedUniqifyingGuid = new Guid(), TaxExempt = false, DriverLicense = "BR867", SpouseDriverLicense = "BR951", PreviousAccountId = "val", YtdTotalSales = 325.83m, YtdTotalReferrals = 8, YtdTotalVisits = 5 }
+            new Mdl.Client() { ClientGuid = new Guid(), PracticeVid = "1", ClientAccountId = "1", FirstName = "Joe", LastName = "Smith", SpouseFirstName = "val", SpouseLastName = "val", StreetAddress1 = "val", StreetAddress2 = "val", CityStateGuid = new Guid(), City = "Fort Lauderdale", State = "Fl", Zipcode = "32333", HomePhone = "(954) 654-5455", WorkPhone = "(305) 564-6545", EmailAddress = "email@somewhere.com", Active = true, FirstVisit = DateTime.Now, LatestVisit = DateTime.Now, TotalSales = 1251.58m, Deleted = false, Salutation = "Mr.", CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), MonetaryFlag = "$", DiscountGuid = new Guid(), Comment = "val", TotalVisits = 22, ReferralSourceGuid = new Guid(), TotalReferrals = 2, ClientTypeGuid = new Guid(), ImageGuid = new Guid(), SocialSecurNum = "321-54-9878", SpouseSocialSecurNum = "456-54-9633", PreferredCommMethodGuid = new Guid(), FaxNumber = "(356) 852-5464", DeletedUniqifyingGuid = new Guid(), TaxExempt = false, DriverLicense = "BR549", SpouseDriverLicense = "BR974", PreviousAccountId = "val", YtdTotalSales = 123.83m, YtdTotalReferrals = 2, YtdTotalVisits = 5},
+            new Mdl.Client() { ClientGuid = new Guid(), PracticeVid = "1", ClientAccountId = "2", FirstName = "Gail", LastName = "Whoknows", SpouseFirstName = "val", SpouseLastName = "val", StreetAddress1 = "val", StreetAddress2 = "val", CityStateGuid = new Guid(), City = "Fort Lauderdale", State = "Fl", Zipcode = "33453", HomePhone = "(954) 654-5455", WorkPhone = "(305) 564-6545", EmailAddress = "email@somewhere.com", Active = true, FirstVisit = DateTime.Now, LatestVisit = DateTime.Now, TotalSales = 3281.58m, Deleted = false, Salutation = "Mrs.", CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), MonetaryFlag = "$", DiscountGuid = new Guid(), Comment = "val", TotalVisits = 22, ReferralSourceGuid = new Guid(), TotalReferrals = 2, ClientTypeGuid = new Guid(), ImageGuid = new Guid(), SocialSecurNum = "321-54-9878", SpouseSocialSecurNum = "456-54-9633", PreferredCommMethodGuid = new Guid(), FaxNumber = "(356) 852-5464", DeletedUniqifyingGuid = new Guid(), TaxExempt = false, DriverLicense = "BR345", SpouseDriverLicense = "BR756", PreviousAccountId = "val", YtdTotalSales = 352.83m, YtdTotalReferrals = 5, YtdTotalVisits = 5},
+            new Mdl.Client() { ClientGuid = new Guid(), PracticeVid = "1", ClientAccountId = "3", FirstName = "Sam", LastName = "IdontCare", SpouseFirstName = "val", SpouseLastName = "val", StreetAddress1 = "val", StreetAddress2 = "val", CityStateGuid = new Guid(), City = "Fort Lauderdale", State = "Fl", Zipcode = "33386", HomePhone = "(954) 654-5455", WorkPhone = "(305) 564-6545", EmailAddress = "email@somewhere.com", Active = true, FirstVisit = DateTime.Now, LatestVisit = DateTime.Now, TotalSales = 4271.58m, Deleted = false, Salutation = "Ms.", CreateDateTime = DateTime.Now, CreateUserGuid = new Guid(), CreateWorkstationGuid = new Guid(), MonetaryFlag = "$", DiscountGuid = new Guid(), Comment = "val", TotalVisits = 22, ReferralSourceGuid = new Guid(), TotalReferrals = 2, ClientTypeGuid = new Guid(), ImageGuid = new Guid(), SocialSecurNum = "321-54-9878", SpouseSocialSecurNum = "456-54-9633", PreferredCommMethodGuid = new Guid(), FaxNumber = "(356) 852-5464", DeletedUniqifyingGuid = new Guid(), TaxExempt = false, DriverLicense = "BR867", SpouseDriverLicense = "BR951", PreviousAccountId = "val", YtdTotalSales = 325.83m, YtdTotalReferrals = 8, YtdTotalVisits = 5}
         };
+
+       
     }
 
     public string AvatarImageLink { get; set; } = null;
@@ -1125,15 +1136,7 @@
         Snackbar.Add(message, severity, config => { config.ShowCloseIcon = false; });
     }
 
-    public class russian
-    {
-        public string stink { get; set; }
-        public string look { get; set; }
-        public string asshole { get; set; }
-        public string stunk { get; set; }
-        public string stank { get; set; }
-    }
-
+  
     public class LastEmployee
     {
         public LastEmployee(string firstname, string lastname)

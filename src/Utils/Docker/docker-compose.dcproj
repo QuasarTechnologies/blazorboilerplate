@@ -33,6 +33,8 @@
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
     <DockerServiceName>blazorboilerplate.server</DockerServiceName>
+    <Configurations>Debug;Release</Configurations>
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.yml" />

@@ -37,7 +37,7 @@ Complete all Blazor dependencies.
 ### How to run
 1. Install the latest **Visual Studio 2022 (v17.0.1 at least)**
 2. Clone or download.
-3. Review / Update appsettings.json - DefaultConnection.
+3. Review / Update appsettings.json - CfgDataConnection.
 4. Open the solution in Visual Studio and press F5.
 5. To view the API using Swagger UI, Run the solution and go to: [http://localhost:53414/swagger/index.html](http://localhost:53414/swagger/index.html). Live example:
 [https://blazorboilerplate.com/swagger/index.html](https://blazorboilerplate.com/swagger/index.html)

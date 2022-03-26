@@ -8,6 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Pages\Clients.razor.cs" />
+    <Compile Remove="Pages\KennelScheduler.razor.cs" />
+    <Compile Remove="Pages\Scheduler.razor.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\Clients.razor" />
+    <Content Remove="Pages\KennelScheduler.razor" />
+    <Content Remove="Pages\Scheduler.razor" />
+    <Content Remove="Pages\SchedulerFeatures.razor" />
+    <Content Remove="Pages\TodoVirtualTable.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.2" />
   </ItemGroup>
 

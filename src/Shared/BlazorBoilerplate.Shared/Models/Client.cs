@@ -48,4 +48,11 @@ public class Client
     public int YtdTotalReferrals { get; set; }
     public int YtdTotalVisits { get; set; }
 
+    public virtual List<CommunicationMethod> CommMethods { get; set; }
+
+}
+public class CommunicationMethod
+{
+    public int Id { get; set; }
+    public string MethodDescription { get; set; }
 }

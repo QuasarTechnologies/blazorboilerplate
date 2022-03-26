@@ -53,8 +53,9 @@
     }
 #else
 {
-<div style="margin: 20px; font-weight: bold; font-size: 18px">Total item Count: @itemCount</div>
-    }
+    <div style="margin: 20px; font-weight: bold; font-size: 18px">Total item Count: @itemCount</div>
+
+}
 #endif
 }
 
@@ -223,9 +224,7 @@
         _pageSize = request.Count;
 #endif
 
-        var items = await apiClient.GetToDos(filter,
-        request.Count,
-        request.StartIndex);
+        var items = await apiClient.GetToDos(filter, request.Count, request.StartIndex);
 
         _itemCount = (int)items.InlineCount;
 
