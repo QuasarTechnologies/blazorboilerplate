@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using MudBlazor;
 using MudBlazor.Services;
 using System.Net.Http;
+using Syncfusion.Blazor;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 
 namespace BlazorBoilerplate.Theme.Material
@@ -32,6 +33,10 @@ namespace BlazorBoilerplate.Theme.Material
         {
             services.AddTransient<ITagHelperComponent, ThemeTagHelperComponent>();
             services.AddTransient<ITagHelperComponent, AppTagHelperComponent>();
+            services.AddSyncfusionBlazor(config =>
+            {
+                config.EnableRippleEffect = true;
+            });
 
             services.AddMudServices(config =>
             {
